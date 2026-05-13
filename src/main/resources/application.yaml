@@ -5,8 +5,8 @@ spring:
   # DB 연결 - SQL 파일 나오면 datasource 채울 것
   datasource:
     url: jdbc:mysql://localhost:3306/buy_or_not?serverTimezone=Asia/Seoul
-    username: your_id
-    password: your_password
+    username: root
+    password: kwonsj0825
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
