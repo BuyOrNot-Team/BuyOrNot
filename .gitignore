@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### cluade ###
+.claude/
+CLAUDE.md
+SPEC.md

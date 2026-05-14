@@ -1,0 +1,29 @@
+/* Consumer Type radio buttons */
+.ct-btn {
+    border: 2px solid var(--ct-color);
+    color: var(--ct-color);
+    background: #fff;
+    border-radius: 2rem;
+    padding: 0.45rem 1.1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    display: inline-block;
+}
+.btn-check:checked + .ct-btn,
+.ct-btn:hover {
+    background: var(--ct-color);
+    color: #fff;
+}
+
+/* Consumer Type badge (mypage display) */
+.ct-badge {
+    display: inline-block;
+    border-radius: 2rem;
+    padding: 0.3rem 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #fff;
+}
