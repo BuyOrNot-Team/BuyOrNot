@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{error/error-base}"
+      th:with="errorCode='500',
+               errorMessage='서버에 문제가 생겼습니다.',
+               errorDescription='잠시 후 다시 시도해 주세요.',
+               btnUrl='/',
+               btnText='홈으로 돌아가기'">
+    <head>
+        <title layout:fragment="errorTitle">500 Internal Server Error</title>
+    </head>
 </html>

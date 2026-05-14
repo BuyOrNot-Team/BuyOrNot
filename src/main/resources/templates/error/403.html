@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{error/error-base}"
+      th:with="errorCode='403',
+               errorMessage='접근 권한이 없습니다.',
+               errorDescription='권한이 있는 계정으로 다시 시도해 주세요.',
+               btnUrl='/login',
+               btnText='로그인 하러 가기'">
+    <head>
+        <title layout:fragment="errorTitle">403 Forbidden</title>
+    </head>
 </html>

@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base(hideNavbar=true)}">
+      <!-- hideNavbar는 html 태그 안에서 지정 -->
+    <head>
+        <!-- 페이지 타이틀 변수 ($CONTENT_TITLE) -->
+        <title>홈</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <!-- 실제 페이지 content 부분 -->
+            <h1>index 페이지</h1>
+        </div>
 
-</body>
+        <th:block layout:fragment="script">
+            <!-- common.js 이외의 js 파일 import가 필요한 경우 아래와 같이 사용 -->
+            <!--<script th:src="@{/js/파일명.js}"></script>-->
+        </th:block>
+    </body>
 </html>
