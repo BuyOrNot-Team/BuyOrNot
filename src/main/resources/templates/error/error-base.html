@@ -1,0 +1,21 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base(hideNavbar=true)}">
+    <head>
+        <!-- 개별 에러 페이지에서 전달한 title -->
+        <title layout:fragment="errorTitle">오류</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="error-container">
+                <!-- 에러 코드와 클래스 동적 처리 -->
+                <div class="error-code error-red" th:text="${errorCode}">Error</div>
+                <h1 class="error-message" th:text="${errorMessage}">오류가 발생했습니다.</h1>
+                <p class="error-description" th:utext="${errorDescription}">다시 시도해 주세요.</p>
+                <!-- 버튼 조건부 노출 -->
+                <a th:if="${btnUrl}" th:href="${btnUrl}" class="btn-home" th:text="${btnText}">홈으로 돌아가기</a>
+            </div>
+        </div>
+    </body>
+</html>
