@@ -1,15 +1,13 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/base(hideNavbar=true)}">
+      layout:decorate="~{error/error-base}"
+      th:with="errorCode='403',
+               errorMessage='접근 권한이 없습니다.',
+               errorDescription='권한이 있는 계정으로 다시 시도해 주세요.',
+               btnUrl='/login',
+               btnText='로그인 하러 가기'">
     <head>
-        <title>403</title>
+        <title layout:fragment="errorTitle">403 Forbidden</title>
     </head>
-    <body>
-        <div layout:fragment="content">
-            <h1>403 Error</h1>
-        </div>
-
-        <th:block layout:fragment="script"></th:block>
-    </body>
 </html>

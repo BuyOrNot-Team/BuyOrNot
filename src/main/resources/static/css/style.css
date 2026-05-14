@@ -50,3 +50,55 @@ footer {
     background-color: var(--brand-surface);
     margin-top: auto; /* 페이지 내용이 적어도 푸터를 아래로 밀어냄 */
 }
+
+/* error 페이지 공통 설정 */
+.error-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    text-align: center;
+}
+
+.error-code {
+    font-size: 8rem;
+    font-weight: 900;
+    color: var(--brand-black);
+    line-height: 1;
+    margin-bottom: 1rem;
+    letter-spacing: -2px;
+}
+
+.error-message {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.error-description {
+    color: #666;
+    line-height: 1.6;
+}
+
+.btn-home {
+    background-color: var(--buy-green);
+    color: white;
+    padding: 12px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s;
+    margin-top: 2rem;
+}
+
+.btn-home:hover {
+    transform: translateY(-2px);
+    color: white;
+}
+
+.error-red {
+    color: var(--mal-red);
+}

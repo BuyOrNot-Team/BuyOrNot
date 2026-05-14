@@ -1,15 +1,13 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/base(hideNavbar=true)}">
+      layout:decorate="~{error/error-base}"
+      th:with="errorCode='404',
+               errorMessage='페이지를 찾을 수 없습니다.',
+               errorDescription='주소가 잘못되었거나,<br>페이지가 삭제되어 찾을 수 없습니다.',
+               btnUrl='/',
+               btnText='홈으로 돌아가기'">
     <head>
-        <title>404</title>
+        <title layout:fragment="errorTitle">404 Not Found</title>
     </head>
-    <body>
-        <div layout:fragment="content">
-            <h1>404 Error</h1>
-        </div>
-
-        <th:block layout:fragment="script"></th:block>
-    </body>
 </html>
