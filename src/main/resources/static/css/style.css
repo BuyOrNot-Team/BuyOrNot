@@ -1,0 +1,52 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+
+/* 전역 설정 */
+:root {
+    --brand-black: #1A1A1A;
+    --brand-surface: #f7f7f7;
+    --brand-border: #EDEDED;
+    --buy-green: #22C55E;
+    --buy-light-green: #f0fdf4;
+    --mal-red: #F43F5E;
+    --mal-light-red: #fff1f2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+/* navbar 설정 */
+.navbar-nav .nav-link {
+    font-size: 1.05rem;
+    padding: 0.5rem 1rem;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    background-color: var(--brand-surface);
+}
+
+.btn-outline-secondary {
+    background-color: white;
+    color: var(--brand-black);
+    border-color: var(--brand-black);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--buy-green);
+    color: white;
+    border-color: var(--buy-green);
+}
+
+/* footer 설정 */
+footer {
+    width: 100%;
+    background-color: var(--brand-surface);
+    margin-top: auto; /* 페이지 내용이 적어도 푸터를 아래로 밀어냄 */
+}
