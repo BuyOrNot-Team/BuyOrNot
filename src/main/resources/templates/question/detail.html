@@ -67,7 +67,7 @@
         </div>
     </div>
 
-    <!-- 수정/삭제 (CUD 구현 전 비활성 처리) -->
+    <!-- 수정/삭제 (Update/Delete 구현 후 disabled 제거) -->
     <div class="d-flex gap-2 mb-5">
         <a th:href="@{/questions/{id}/edit(id=${question.questionId})}"
            class="btn btn-sm btn-outline-secondary disabled">수정</a>

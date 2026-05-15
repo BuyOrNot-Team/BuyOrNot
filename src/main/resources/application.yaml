@@ -21,3 +21,7 @@ spring:
     show-sql: true
   thymeleaf:
     cache: false
+
+file:
+  upload:
+    path: src/main/resources/static/uploads/productImages/
