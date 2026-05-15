@@ -74,7 +74,22 @@ public class Question {
         this.viewCount++;
     }
 
-    // CUD용 setter (Read 완료 후 필요 시 추가)
+    // 등록용 정적 팩토리
+    public static Question create(Member member, String title, String content, String productName, Integer price, String pros, String cons, String imageUrl) {
+        Question q = new Question();
+        q.member = member;
+        q.title = title;
+        q.content = content;
+        q.productName = productName;
+        q.price = price;
+        q.pros = pros;
+        q.cons = cons;
+        q.imageUrl = imageUrl;
+        q.viewCount = 0;
+        return q;
+    }
+
+    // 수정용 메서드
     public void update(String title, String content, String productName, Integer price, String pros, String cons, String imageUrl) {
         this.title = title;
         this.content = content;

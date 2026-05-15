@@ -1,10 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>질문 수정</title>
 </head>
 <body>
+<main layout:fragment="content" class="container my-4" style="max-width: 720px;">
 
+    <h2 class="mb-4">질문 수정</h2>
+
+    <form th:action="@{/questions/{id}/edit(id=${questionId})}" method="post"
+          th:object="${questionFormDTO}"
+          enctype="multipart/form-data">
+
+        <!-- 제목 -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">
+                제목 <span class="text-danger">*</span>
+            </label>
+            <input type="text" class="form-control"
+                   th:field="*{title}"
+                   th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{title}"></div>
+        </div>
+
+        <!-- 내용 -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">
+                내용 <span class="text-danger">*</span>
+            </label>
+            <textarea class="form-control" rows="6"
+                      th:field="*{content}"
+                      th:classappend="${#fields.hasErrors('content')} ? 'is-invalid'"></textarea>
+            <div class="invalid-feedback" th:errors="*{content}"></div>
+        </div>
+
+        <!-- 상품명 / 가격 -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-8">
+                <label class="form-label fw-semibold">
+                    상품명 <span class="text-danger">*</span>
+                </label>
+                <input type="text" class="form-control"
+                       th:field="*{productName}"
+                       th:classappend="${#fields.hasErrors('productName')} ? 'is-invalid'">
+                <div class="invalid-feedback" th:errors="*{productName}"></div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">가격 (원)</label>
+                <input type="number" class="form-control"
+                       th:field="*{price}" min="0"
+                       th:classappend="${#fields.hasErrors('price')} ? 'is-invalid'">
+                <div class="invalid-feedback" th:errors="*{price}"></div>
+            </div>
+        </div>
+
+        <!-- 장·단점 -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="form-label text-success fw-semibold">👍 장점</label>
+                <textarea class="form-control" rows="3" th:field="*{pros}"></textarea>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-danger fw-semibold">👎 단점</label>
+                <textarea class="form-control" rows="3" th:field="*{cons}"></textarea>
+            </div>
+        </div>
+
+        <!-- 상품 이미지 -->
+        <div class="mb-4">
+            <label class="form-label fw-semibold">상품 이미지</label>
+
+            <!-- 기존 이미지 미리보기 -->
+            <div th:if="${existingImageUrl}" class="mb-2">
+                <img th:src="${existingImageUrl}" alt="현재 이미지"
+                     class="rounded border"
+                     style="width:100px; height:100px; object-fit:cover;">
+                <p class="text-muted small mt-1">현재 이미지 · 새 파일을 선택하면 교체됩니다.</p>
+            </div>
+
+            <input type="file" class="form-control" name="imageFile" accept="image/*">
+            <div class="form-text text-muted">변경하지 않으려면 비워두세요.</div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">저장</button>
+            <a th:href="@{/questions/{id}(id=${questionId})}"
+               class="btn btn-outline-secondary">취소</a>
+        </div>
+
+    </form>
+
+</main>
 </body>
 </html>
