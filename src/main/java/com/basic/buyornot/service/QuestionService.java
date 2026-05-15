@@ -70,6 +70,47 @@ public class QuestionService {
         return questionRepository.save(question).getQuestionId();
     }
 
+    // 수정
+    @Transactional
+    public void update(Long id, QuestionFormDTO dto, Long memberId) throws IOException {
+        Question question = questionRepository.findByIdWithMember(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문입니다. id=" + id));
+
+        if (!question.getMember().getMemberId().equals(memberId)) {
+            throw new SecurityException("수정 권한이 없습니다.");
+        }
+
+        // 새 이미지가 있으면 교체, 없으면 기존 imageUrl 유지
+        String imageUrl = question.getImageUrl();
+        MultipartFile imageFile = dto.getImageFile();
+        if (imageFile != null && !imageFile.isEmpty()) {
+            imageUrl = saveImage(imageFile);
+        }
+
+        question.update(
+                dto.getTitle(),
+                dto.getContent(),
+                dto.getProductName(),
+                dto.getPrice(),
+                dto.getPros(),
+                dto.getCons(),
+                imageUrl
+        );
+    }
+
+    // 삭제
+    @Transactional
+    public void delete(Long id, Long memberId) {
+        Question question = questionRepository.findByIdWithMember(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문입니다. id=" + id));
+
+        if (!question.getMember().getMemberId().equals(memberId)) {
+            throw new SecurityException("삭제 권한이 없습니다.");
+        }
+
+        questionRepository.delete(question);
+    }
+
     // 이미지 파일 저장 (내부 전용)
     private String saveImage(MultipartFile image) throws IOException {
         String fileName = UUID.randomUUID().toString().replace("-", "")
