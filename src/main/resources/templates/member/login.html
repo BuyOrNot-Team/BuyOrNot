@@ -31,7 +31,7 @@
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100 mb-3">로그인</button>
+                            <button type="submit" class="btn btn-green w-100 mb-3">로그인</button>
 
                             <!--
                             TODO: Google OAuth 로그인 (spring-boot-starter-oauth2-client 의존성 추가 및 설정 후 활성화)
@@ -42,7 +42,8 @@
                         </form>
 
                         <div class="text-center mt-3">
-                            <a th:href="@{/signup}">계정이 없으신가요? 회원가입</a>
+                            계정이 없으신가요?
+                            <a th:href="@{/signup}" style="color: var(--buy-green);"> 회원가입</a>
                         </div>
                     </div>
                 </div>

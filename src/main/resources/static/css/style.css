@@ -7,6 +7,7 @@
     --brand-border: #EDEDED;
     --buy-green: #22C55E;
     --buy-light-green: #f0fdf4;
+    --buy-deep-green: #1eb054;
     --mal-red: #F43F5E;
     --mal-light-red: #fff1f2;
 }
@@ -27,11 +28,7 @@ body {
     padding: 0.5rem 1rem;
 }
 
-.form-control:focus {
-    box-shadow: none;
-    background-color: var(--brand-surface);
-}
-
+/* bs 스타일 덮어쓰기 */
 .btn-outline-secondary {
     background-color: white;
     color: var(--brand-black);
@@ -42,6 +39,68 @@ body {
     background-color: var(--buy-green);
     color: white;
     border-color: var(--buy-green);
+}
+
+/* 범용 버튼 스타일 */
+.btn-white {
+    background-color: white;
+    color: var(--brand-black);
+    border: 1px solid var(--brand-black);
+    transition: all 0.2s;
+}
+
+.btn-white:hover {
+    background-color: var(--brand-surface);
+    color: var(--brand-black);
+    border-color: var(--brand-black);
+}
+
+.btn-green {
+    background-color: var(--buy-green);
+    border: 1px solid var(--buy-green);
+    color: white; /* 텍스트 흰색 고정 */
+    transition: all 0.2s;
+}
+
+.btn-green:hover {
+    background-color: var(--buy-deep-green);
+    border-color: var(--buy-deep-green);
+    color: white;
+}
+
+.form-control:focus {
+    border-color: var(--buy-green);
+    box-shadow: 0 0 0 0.25rem rgba(34, 197, 94, 0.25);
+}
+
+/* 햄버거 메뉴 열렸을 때 버튼들이 너무 붙지 않게 가로폭 조정 */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        max-height: none !important;
+        overflow-y: visible !important;
+    }
+
+    .navbar-collapse .d-flex {
+        width: 100%;
+    }
+
+    .btn-login, .btn-signup {
+        flex: 1; /* 모바일에서 버튼 두 개가 반반씩 나눠 가짐 */
+        text-align: center;
+    }
+}
+
+/* 드롭다운 메뉴 active 배경색 변경 */
+.dropdown-item.active,
+.dropdown-item:active {
+    background-color: var(--buy-green) !important;
+    color: white !important;
+}
+
+.text-danger.dropdown-item:active,
+.text-danger.dropdown-item.active {
+    background-color: rgb(220, 53, 69) !important;
+    color: white !important;
 }
 
 /* footer 설정 */
@@ -103,10 +162,10 @@ footer {
     color: var(--mal-red);
 }
 
-/* Consumer Type radio buttons */
+/* 소비패턴 라디오 버튼 */
 .ct-btn {
-    border: 2px solid var(--ct-color);
-    color: var(--ct-color);
+    border: 2px solid var(--buy-green);
+    color: var(--buy-green);
     background: #fff;
     border-radius: 2rem;
     padding: 0.45rem 1.1rem;
@@ -119,11 +178,11 @@ footer {
 }
 .btn-check:checked + .ct-btn,
 .ct-btn:hover {
-    background: var(--ct-color);
+    background-color: var(--buy-green);
     color: #fff;
 }
 
-/* Consumer Type badge */
+/* 소비패턴 뱃지 */
 .ct-badge {
     display: inline-block;
     border-radius: 2rem;
