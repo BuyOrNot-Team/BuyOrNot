@@ -1,10 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+    <head>
+        <title>회원가입</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2 class="mb-4">회원가입</h2>
 
-</body>
+                        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+                        <form th:action="@{/signup}" th:object="${memberForm}" method="post">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">아이디</label>
+                                <input type="text" class="form-control" id="username" th:field="*{username}"
+                                       th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'"
+                                       placeholder="영문, 숫자 4자 이상">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">비밀번호</label>
+                                <input type="password" class="form-control" id="password" th:field="*{password}"
+                                       th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
+                                       placeholder="8자 이상">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="passwordConfirm" class="form-label">비밀번호 확인</label>
+                                <input type="password" class="form-control" id="passwordConfirm" th:field="*{passwordConfirm}"
+                                       th:classappend="${#fields.hasErrors('passwordConfirm')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="nickname" class="form-label">닉네임</label>
+                                <input type="text" class="form-control" id="nickname" th:field="*{nickname}"
+                                       th:classappend="${#fields.hasErrors('nickname')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">이메일</label>
+                                <input type="email" class="form-control" id="email" th:field="*{email}"
+                                       th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+                                       placeholder="example@email.com">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                            </div>
+
+                            <!-- 소비패턴 선택 -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">나의 소비패턴 <span class="text-danger">*</span></label>
+                                <div th:if="${#fields.hasErrors('consumerType')}" class="text-danger small mb-2" th:errors="*{consumerType}"></div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <div th:each="type : ${consumerTypes}">
+                                        <input type="radio" class="btn-check" autocomplete="off"
+                                               name="consumerType"
+                                               th:id="${'ct_' + type.name()}"
+                                               th:value="${type.name()}"
+                                               th:checked="${memberForm.consumerType == type}">
+                                        <label class="ct-btn"
+                                               th:for="${'ct_' + type.name()}"
+                                               th:style="'--ct-color: ' + ${type.color}"
+                                               th:attr="title=${type.description}"
+                                               data-bs-toggle="tooltip"
+                                               data-bs-placement="top"
+                                               th:text="${type.note}">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-text text-muted mt-1">버튼에 마우스를 올리면 설명이 나타납니다.</div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">회원가입</button>
+                        </form>
+
+                        <div class="text-center mt-3">
+                            <a th:href="@{/login}">이미 계정이 있으신가요? 로그인</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <th:block layout:fragment="script">
+            <script>
+                document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+                    new bootstrap.Tooltip(el);
+                });
+            </script>
+        </th:block>
+    </body>
 </html>
