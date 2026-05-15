@@ -11,7 +11,7 @@
 
     <h2 class="mb-4">질문 등록</h2>
 
-    <form th:action="@{/questions/new}" method="post"
+    <form th:action="@{/questions/form}" method="post"
           th:object="${questionFormDTO}"
           enctype="multipart/form-data">
 
@@ -86,7 +86,7 @@
         </div>
 
         <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-primary">등록</button>
+            <button type="submit" class="btn btn-green">등록</button>
             <a th:href="@{/questions}" class="btn btn-outline-secondary">취소</a>
         </div>
 
