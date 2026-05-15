@@ -1,34 +1,3 @@
-<<<<<<< HEAD
-/* Consumer Type radio buttons */
-.ct-btn {
-    border: 2px solid var(--ct-color);
-    color: var(--ct-color);
-    background: #fff;
-    border-radius: 2rem;
-    padding: 0.45rem 1.1rem;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-    white-space: nowrap;
-    display: inline-block;
-}
-.btn-check:checked + .ct-btn,
-.ct-btn:hover {
-    background: var(--ct-color);
-    color: #fff;
-}
-
-/* Consumer Type badge (mypage display) */
-.ct-badge {
-    display: inline-block;
-    border-radius: 2rem;
-    padding: 0.3rem 1rem;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: #fff;
-}
-=======
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
 
 /* 전역 설정 */
@@ -79,7 +48,7 @@ body {
 footer {
     width: 100%;
     background-color: var(--brand-surface);
-    margin-top: auto; /* 페이지 내용이 적어도 푸터를 아래로 밀어냄 */
+    margin-top: auto;
 }
 
 /* error 페이지 공통 설정 */
@@ -133,4 +102,33 @@ footer {
 .error-red {
     color: var(--mal-red);
 }
->>>>>>> master
+
+/* Consumer Type radio buttons */
+.ct-btn {
+    border: 2px solid var(--ct-color);
+    color: var(--ct-color);
+    background: #fff;
+    border-radius: 2rem;
+    padding: 0.45rem 1.1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    display: inline-block;
+}
+.btn-check:checked + .ct-btn,
+.ct-btn:hover {
+    background: var(--ct-color);
+    color: #fff;
+}
+
+/* Consumer Type badge */
+.ct-badge {
+    display: inline-block;
+    border-radius: 2rem;
+    padding: 0.3rem 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #fff;
+}

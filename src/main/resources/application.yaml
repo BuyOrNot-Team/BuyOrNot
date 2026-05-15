@@ -1,6 +1,8 @@
 spring:
   application:
     name: BuyOrNot
+  config:
+    import: optional:file:.env[.properties]
   # DB 연결
   datasource:
     url: jdbc:mysql://localhost:3306/buy_or_not?serverTimezone=Asia/Seoul

@@ -1,51 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<head th:replace="~{layout/base :: common-head('로그인')}"></head>
-<body>
-<div th:replace="~{layout/navbar :: navbar}"></div>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+    <head>
+        <title>로그인</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-5">
+                        <h2 class="mb-4">로그인</h2>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-5">
-            <h2 class="mb-4">로그인</h2>
+                        <div th:if="${param.error}" class="alert alert-danger">
+                            아이디 또는 비밀번호가 올바르지 않습니다.
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-success">
+                            로그아웃 되었습니다.
+                        </div>
 
-            <div th:if="${param.error}" class="alert alert-danger">
-                아이디 또는 비밀번호가 올바르지 않습니다.
-            </div>
-            <div th:if="${param.logout}" class="alert alert-success">
-                로그아웃 되었습니다.
-            </div>
+                        <form th:action="@{/login}" method="post">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">아이디</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                            </div>
 
-            <form th:action="@{/login}" method="post">
-                <div class="mb-3">
-                    <label for="username" class="form-label">아이디</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">비밀번호</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 mb-3">로그인</button>
+
+                            <!--
+                            TODO: Google OAuth 로그인 (spring-boot-starter-oauth2-client 의존성 추가 및 설정 후 활성화)
+                            <a href="/oauth2/authorization/google" class="btn btn-outline-danger w-100">
+                                구글로 로그인
+                            </a>
+                            -->
+                        </form>
+
+                        <div class="text-center mt-3">
+                            <a th:href="@{/signup}">계정이 없으신가요? 회원가입</a>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <label for="password" class="form-label">비밀번호</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-
-                <button type="submit" class="btn btn-primary w-100 mb-3">로그인</button>
-
-                <!--
-                TODO: Google OAuth 로그인 (spring-boot-starter-oauth2-client 의존성 추가 및 설정 후 활성화)
-                <a href="/oauth2/authorization/google" class="btn btn-outline-danger w-100">
-                    구글로 로그인
-                </a>
-                -->
-            </form>
-
-            <div class="text-center mt-3">
-                <a th:href="@{/signup}">계정이 없으신가요? 회원가입</a>
             </div>
         </div>
-    </div>
-</div>
-
-<div th:replace="~{layout/footer :: footer}"></div>
-<div th:replace="~{layout/base :: scripts}"></div>
-</body>
+    </body>
 </html>

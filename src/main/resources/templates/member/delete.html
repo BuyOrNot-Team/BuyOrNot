@@ -1,39 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<head th:replace="~{layout/base :: common-head('회원탈퇴')}"></head>
-<body>
-<div th:replace="~{layout/navbar :: navbar}"></div>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+    <head>
+        <title>회원탈퇴</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-5">
+                        <h2 class="mb-4 text-danger">회원탈퇴</h2>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-5">
-            <h2 class="mb-4 text-danger">회원탈퇴</h2>
+                        <div class="alert alert-warning">
+                            탈퇴 후 계정을 복구할 수 없습니다. 비밀번호를 입력하여 본인 확인 후 탈퇴하세요.
+                        </div>
 
-            <div class="alert alert-warning">
-                탈퇴 후 계정을 복구할 수 없습니다. 비밀번호를 입력하여 본인 확인 후 탈퇴하세요.
+                        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+                        <form th:action="@{/member/delete}" th:object="${deleteForm}" method="post">
+                            <div class="mb-3">
+                                <label for="password" class="form-label">비밀번호</label>
+                                <input type="password" class="form-control" id="password" th:field="*{password}"
+                                       th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-danger">탈퇴하기</button>
+                                <a th:href="@{/mypage}" class="btn btn-secondary">취소</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
-
-            <form th:action="@{/member/delete}" th:object="${deleteForm}" method="post">
-                <div class="mb-3">
-                    <label for="password" class="form-label">비밀번호</label>
-                    <input type="password" class="form-control" id="password" th:field="*{password}"
-                           th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
-                    <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-                </div>
-
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-danger">탈퇴하기</button>
-                    <a th:href="@{/mypage}" class="btn btn-secondary">취소</a>
-                </div>
-            </form>
         </div>
-    </div>
-</div>
-
-<div th:replace="~{layout/footer :: footer}"></div>
-<div th:replace="~{layout/base :: scripts}"></div>
-</body>
+    </body>
 </html>
