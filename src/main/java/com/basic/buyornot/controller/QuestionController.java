@@ -31,14 +31,14 @@ public class QuestionController {
     }
 
     // 작성 폼
-    @GetMapping("/new")
+    @GetMapping("/form")
     public String createForm(Model model) {
         model.addAttribute("questionFormDTO", new QuestionFormDTO());
         return "question/form";
     }
 
     // 등록 처리
-    @PostMapping("/new")
+    @PostMapping("/form")
     public String create(@Valid @ModelAttribute QuestionFormDTO questionFormDTO,
                          BindingResult bindingResult,
                          Model model) throws IOException {
@@ -47,5 +47,46 @@ public class QuestionController {
         }
         Long savedId = questionService.create(questionFormDTO, TEMP_MEMBER_ID);
         return "redirect:/questions/" + savedId;
+    }
+
+    // 수정 폼
+    @GetMapping("/{id}/edit")
+    public String editForm(@PathVariable Long id, Model model) {
+        QuestionDetailDTO question = questionService.getQuestion(id);
+
+        QuestionFormDTO dto = QuestionFormDTO.builder()
+                .title(question.getTitle())
+                .content(question.getContent())
+                .productName(question.getProductName())
+                .price(question.getPrice())
+                .pros(question.getPros())
+                .cons(question.getCons())
+                .build();
+
+        model.addAttribute("questionFormDTO", dto);
+        model.addAttribute("questionId", id);
+        model.addAttribute("existingImageUrl", question.getImageUrl());
+        return "question/edit";
+    }
+
+    // 수정 처리
+    @PostMapping("/{id}/edit")
+    public String edit(@PathVariable Long id,
+                       @Valid @ModelAttribute QuestionFormDTO questionFormDTO,
+                       BindingResult bindingResult,
+                       Model model) throws IOException {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("questionId", id);
+            return "question/edit";
+        }
+        questionService.update(id, questionFormDTO, TEMP_MEMBER_ID);
+        return "redirect:/questions/" + id;
+    }
+
+    // 삭제 처리
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable Long id) {
+        questionService.delete(id, TEMP_MEMBER_ID);
+        return "redirect:/questions";
     }
 }
