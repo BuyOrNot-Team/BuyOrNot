@@ -1,6 +1,8 @@
 package com.basic.buyornot.repository;
 
 import com.basic.buyornot.entity.Question;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +20,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Modifying
     @Query("UPDATE Question q SET q.viewCount = q.viewCount + 1 WHERE q.questionId = :id")
     void incrementViewCount(@Param("id") Long id);
+
+    Page<Question> findAll(Pageable pageable);
 }

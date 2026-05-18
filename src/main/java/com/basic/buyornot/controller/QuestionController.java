@@ -2,15 +2,20 @@ package com.basic.buyornot.controller;
 
 import com.basic.buyornot.dto.QuestionDetailDTO;
 import com.basic.buyornot.dto.QuestionFormDTO;
+import com.basic.buyornot.entity.Question;
 import com.basic.buyornot.service.QuestionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/questions")
@@ -88,5 +93,17 @@ public class QuestionController {
     public String delete(@PathVariable Long id) {
         questionService.delete(id, TEMP_MEMBER_ID);
         return "redirect:/questions";
+    }
+
+    @GetMapping
+    public String getQuestions(
+            Model model,
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        System.out.println(pageable.getSort());
+        List<Question> questions = questionService.searchQuestions(pageable);
+        model.addAttribute("pageable", pageable);
+        model.addAttribute("questions", questions);
+        return "question/list";
     }
 }

@@ -8,6 +8,7 @@ import com.basic.buyornot.repository.MemberRepository;
 import com.basic.buyornot.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -109,6 +111,10 @@ public class QuestionService {
         }
 
         questionRepository.delete(question);
+    }
+
+    public List<Question> searchQuestions(Pageable pageable) {
+        return questionRepository.findAll(pageable).toList();
     }
 
     // 이미지 파일 저장 (내부 전용)

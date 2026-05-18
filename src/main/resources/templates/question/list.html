@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base(hideNavbar=false)}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>홈</title>
 </head>
 <body>
+<div layout:fragment="content">
+    <div th:if="${#lists.isEmpty(questions)}" class="alert alert-warning">
+        등록된 질문이 없습니다. 첫 질문을 작성해 보세요!
+    </div>
 
+    <table th:unless="${#lists.isEmpty(questions)}" class="table">
+        <thead>
+        <tr>
+            <th>번호(ID)</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="question : ${questions}">
+            <td th:text="${question.getQuestionId()}">1</td>
+            <td th:text="${question.getTitle()}">제목 샘플</td>
+            <td th:text="${question.getMember().getNickname()}">작성자 샘플</td>
+            <td th:text="${question.getViewCount()}">0</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<th:block layout:fragment="script">
+    <!-- common.js 이외의 js 파일 import가 필요한 경우 아래와 같이 사용 -->
+    <!--<script th:src="@{/js/파일명.js}"></script>-->
+</th:block>
 </body>
 </html>
