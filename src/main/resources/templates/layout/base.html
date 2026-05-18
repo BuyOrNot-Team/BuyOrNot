@@ -12,6 +12,14 @@
             <header th:replace="~{layout/navbar :: navbarFragment}"></header>
         </th:block>
 
+        <!-- 플래시 메시지 -->
+        <div th:if="${flashSuccess}" class="container-fluid px-4 pt-3">
+            <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+                <span th:text="${flashSuccess}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+
         <!-- content 영역 : 실제 기능 html이 들어갈 자리 -->
         <main layout:fragment="content" class="px-4 py-4"></main>
 

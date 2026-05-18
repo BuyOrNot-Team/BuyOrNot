@@ -55,13 +55,13 @@ public class QuestionController {
         QuestionDetailDTO question = questionService.getQuestion(id);
 
         QuestionFormDTO dto = QuestionFormDTO.builder()
-                .title(question.getTitle())
-                .content(question.getContent())
-                .productName(question.getProductName())
-                .price(question.getPrice())
-                .pros(question.getPros())
-                .cons(question.getCons())
-                .build();
+            .title(question.getTitle())
+            .content(question.getContent())
+            .productName(question.getProductName())
+            .price(question.getPrice())
+            .pros(question.getPros())
+            .cons(question.getCons())
+            .build();
 
         model.addAttribute("questionFormDTO", dto);
         model.addAttribute("questionId", id);

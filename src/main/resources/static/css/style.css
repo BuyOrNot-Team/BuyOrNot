@@ -164,8 +164,8 @@ footer {
 
 /* 소비패턴 라디오 버튼 */
 .ct-btn {
-    border: 2px solid var(--buy-green);
-    color: var(--buy-green);
+    border: 2px solid var(--ct-color); /* thymeLeaf파일에서 정해진 색 채워 넣음*/
+    color: var(--ct-color); /* thymeLeaf파일에서 정해진 색 채워 넣음*/
     background: #fff;
     border-radius: 2rem;
     padding: 0.45rem 1.1rem;
@@ -178,7 +178,7 @@ footer {
 }
 .btn-check:checked + .ct-btn,
 .ct-btn:hover {
-    background-color: var(--buy-green);
+    background: var(--ct-color); /* thymeLeaf파일에서 정해진 색 채워 넣음*/
     color: #fff;
 }
 
