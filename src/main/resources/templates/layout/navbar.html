@@ -42,7 +42,6 @@
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="min-width: 180px;">
                             <!-- 닉네임 -->
                             <li class="px-3 pt-2 pb-1 fw-bold text-dark" th:text="${navMember.nickname}"></li>
-                        <ul class="dropdown-menu dropdown-menu-lg-end shadow-sm" style="min-width: 180px;">
                             <!-- 현재 소비패턴 -->
                             <li class="px-3 pb-2" th:if="${navMember.consumerType != null}">
                                 <span class="ct-badge"
@@ -59,6 +58,7 @@
                             </li>
                         </ul>
                     </div>
+
 
                     <!-- 질문하기 버튼 -->
                     <button th:onclick="|location.href='@{/questions/form}'|" class="btn btn-outline-secondary rounded-pill px-4 py-2 w-100" type="button" style="font-size: 0.9rem;">
