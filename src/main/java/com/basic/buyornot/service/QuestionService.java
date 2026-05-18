@@ -10,6 +10,7 @@ import com.basic.buyornot.repository.MemberRepository;
 import com.basic.buyornot.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -115,23 +116,22 @@ public class QuestionService {
         questionRepository.delete(question);
     }
 
-    public QuestionSearchDTO searchQuestions(Pageable pageable) {
-        List<SimpleQuestionDTO> questions = questionRepository.findAll(pageable)
-                .stream()
-                .map(item -> {
-                    return new SimpleQuestionDTO(
-                            item.getQuestionId(),
-                            "",
-                            item.getTitle(),
-                            item.getPrice(),
-                            50,
-                            50,
-                            100,
-                            item.getCreatedAt()
-                    );
-                }).toList();
+    public QuestionSearchDTO searchQuestions(String searchText, Pageable pageable) {
+        Page<Question> questionsPage = questionRepository.findByTitleContaining(searchText, pageable);
+        List<SimpleQuestionDTO> questions = questionsPage.stream()
+                .map(item -> new SimpleQuestionDTO(
+                        item.getQuestionId(),
+                        "",
+                        item.getTitle(),
+                        item.getPrice(),
+                        50,
+                        50,
+                        100,
+                        item.getCreatedAt()
+                        )
+                ).toList();
 
-        return new QuestionSearchDTO(pageable, questions);
+        return new QuestionSearchDTO(questionsPage.getTotalElements(), questionsPage.getTotalPages(), pageable, questions);
     }
 
     // 이미지 파일 저장 (내부 전용)

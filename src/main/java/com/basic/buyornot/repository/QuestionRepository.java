@@ -21,5 +21,5 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query("UPDATE Question q SET q.viewCount = q.viewCount + 1 WHERE q.questionId = :id")
     void incrementViewCount(@Param("id") Long id);
 
-    Page<Question> findAll(Pageable pageable);
+    Page<Question> findByTitleContaining(String searchText, Pageable pageable);
 }

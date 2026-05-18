@@ -97,12 +97,14 @@ public class QuestionController {
     @GetMapping
     public String getQuestions(
             Model model,
+            @RequestParam(name = "q", required = false, defaultValue = "") String searchText,
             @PageableDefault(size = 12, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        QuestionSearchDTO questions = questionService.searchQuestions(pageable);
+        QuestionSearchDTO questionsDTO = questionService.searchQuestions(searchText, pageable);
         model.addAttribute("pageable", pageable);
         model.addAttribute("sortType", pageable.getSort().stream().findFirst().get().getProperty());
-        model.addAttribute("questions", questions);
+        model.addAttribute("questions", questionsDTO);
+        model.addAttribute("searchText", searchText);
         return "question/list";
     }
 }
