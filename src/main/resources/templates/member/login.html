@@ -19,6 +19,9 @@
                         <div th:if="${param.logout}" class="alert alert-success">
                             로그아웃 되었습니다.
                         </div>
+                        <div th:if="${param.oauth}" class="alert alert-success">
+                            회원가입이 완료되었습니다. 구글 로그인 버튼으로 로그인해 주세요.
+                        </div>
 
                         <form th:action="@{/login}" method="post">
                             <div class="mb-3">
@@ -33,12 +36,10 @@
 
                             <button type="submit" class="btn btn-green w-100 mb-3">로그인</button>
 
-                            <!--
-                            TODO: Google OAuth 로그인 (spring-boot-starter-oauth2-client 의존성 추가 및 설정 후 활성화)
                             <a href="/oauth2/authorization/google" class="btn btn-outline-danger w-100">
                                 구글로 로그인
                             </a>
-                            -->
+
                         </form>
 
                         <div class="text-center mt-3">

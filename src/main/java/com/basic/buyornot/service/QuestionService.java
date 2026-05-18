@@ -43,7 +43,7 @@ public class QuestionService {
     public QuestionDetailDTO getQuestion(Long id) {
         questionRepository.incrementViewCount(id);
         Question question = questionRepository.findByIdWithMember(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문입니다. id=" + id));
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문입니다. id=" + id));
         return new QuestionDetailDTO(question);
     }
 
@@ -51,7 +51,7 @@ public class QuestionService {
     @Transactional
     public Long create(QuestionFormDTO dto, Long memberId) throws IOException {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다. id=" + memberId));
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다. id=" + memberId));
 
         // 이미지 파일이 있으면 저장 후 경로를 imageUrl로 사용, 없으면 null
         String imageUrl = null;
@@ -61,14 +61,14 @@ public class QuestionService {
         }
 
         Question question = Question.create(
-                member,
-                dto.getTitle(),
-                dto.getContent(),
-                dto.getProductName(),
-                dto.getPrice(),
-                dto.getPros(),
-                dto.getCons(),
-                imageUrl
+            member,
+            dto.getTitle(),
+            dto.getContent(),
+            dto.getProductName(),
+            dto.getPrice(),
+            dto.getPros(),
+            dto.getCons(),
+            imageUrl
         );
 
         return questionRepository.save(question).getQuestionId();
@@ -78,7 +78,7 @@ public class QuestionService {
     @Transactional
     public void update(Long id, QuestionFormDTO dto, Long memberId) throws IOException {
         Question question = questionRepository.findByIdWithMember(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문입니다. id=" + id));
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문입니다. id=" + id));
 
         if (!question.getMember().getMemberId().equals(memberId)) {
             throw new SecurityException("수정 권한이 없습니다.");
@@ -92,13 +92,13 @@ public class QuestionService {
         }
 
         question.update(
-                dto.getTitle(),
-                dto.getContent(),
-                dto.getProductName(),
-                dto.getPrice(),
-                dto.getPros(),
-                dto.getCons(),
-                imageUrl
+            dto.getTitle(),
+            dto.getContent(),
+            dto.getProductName(),
+            dto.getPrice(),
+            dto.getPros(),
+            dto.getCons(),
+            imageUrl
         );
     }
 
@@ -106,7 +106,7 @@ public class QuestionService {
     @Transactional
     public void delete(Long id, Long memberId) {
         Question question = questionRepository.findByIdWithMember(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문입니다. id=" + id));
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문입니다. id=" + id));
 
         if (!question.getMember().getMemberId().equals(memberId)) {
             throw new SecurityException("삭제 권한이 없습니다.");
@@ -137,7 +137,7 @@ public class QuestionService {
     // 이미지 파일 저장 (내부 전용)
     private String saveImage(MultipartFile image) throws IOException {
         String fileName = UUID.randomUUID().toString().replace("-", "")
-                + "-" + image.getOriginalFilename();
+            + "-" + image.getOriginalFilename();
 
         Path path = Paths.get(uploadPath + fileName);
         Files.createDirectories(path.getParent());

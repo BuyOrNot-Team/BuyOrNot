@@ -39,23 +39,26 @@
                              data-bs-toggle="dropdown" aria-expanded="false"
                              th:text="${#strings.substring(navMember.nickname, 0, 1)}">
                         </div>
-                        <ul class="dropdown-menu dropdown-menu-lg-end shadow-sm" style="min-width: 180px;">
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="min-width: 180px;">
+                            <!-- 닉네임 -->
+                            <li class="px-3 pt-2 pb-1 fw-bold text-dark" th:text="${navMember.nickname}"></li>
                             <!-- 현재 소비패턴 -->
-                            <li class="px-3 py-2" th:if="${navMember.consumerType != null}">
+                            <li class="px-3 pb-2" th:if="${navMember.consumerType != null}">
                                 <span class="ct-badge"
                                       th:style="'background-color: ' + ${navMember.consumerType.color}"
                                       th:text="${navMember.consumerType.note}"></span>
                             </li>
-                            <li><hr class="dropdown-divider" th:if="${navMember.consumerType != null}"></li>
-                            <li><a class="dropdown-item" th:href="@{/mypage}">마이페이지</a></li>
+                            <li><hr class="dropdown-divider my-1"></li>
+                            <li><a class="dropdown-item py-2" th:href="@{/mypage}">마이페이지</a></li>
                             <li>
                                 <form th:action="@{/logout}" method="post" class="m-0">
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                                    <button type="submit" class="dropdown-item text-danger w-100 text-start border-0">로그아웃</button>
+                                    <button type="submit" class="dropdown-item py-2 text-danger w-100 text-start border-0 bg-transparent">로그아웃</button>
                                 </form>
                             </li>
                         </ul>
                     </div>
+
 
                     <!-- 질문하기 버튼 -->
                     <button th:onclick="|location.href='@{/questions/form}'|" class="btn btn-outline-secondary rounded-pill px-4 py-2 w-100" type="button" style="font-size: 0.9rem;">
@@ -65,8 +68,8 @@
 
                 <!-- 비로그인 상태: 로그인 + 회원가입 -->
                 <div th:if="${navMember == null}" class="d-flex align-items-center gap-2 mt-lg-0 mt-3 w-100 w-lg-auto justify-content-center">
-                    <a th:href="@{/login}" class="btn btn-white btn-login rounded-pill px-4 py-2">로그인</a>
-                    <a th:href="@{/signup}" class="btn btn-green btn-signup rounded-pill px-4 py-2">회원가입</a>
+                    <a th:href="@{/login}" class="btn btn-outline-secondary rounded-pill px-4 py-2" style="font-size: 0.9rem;">로그인</a>
+                    <a th:href="@{/signup}" class="btn btn-success rounded-pill px-4 py-2" style="font-size: 0.9rem;">회원가입</a>
                 </div>
             </div>
         </div>
