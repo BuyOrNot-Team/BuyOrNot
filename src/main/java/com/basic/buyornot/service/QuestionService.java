@@ -2,6 +2,8 @@ package com.basic.buyornot.service;
 
 import com.basic.buyornot.dto.QuestionDetailDTO;
 import com.basic.buyornot.dto.QuestionFormDTO;
+import com.basic.buyornot.dto.QuestionSearchDTO;
+import com.basic.buyornot.dto.SimpleQuestionDTO;
 import com.basic.buyornot.entity.Member;
 import com.basic.buyornot.entity.Question;
 import com.basic.buyornot.repository.MemberRepository;
@@ -113,8 +115,22 @@ public class QuestionService {
         questionRepository.delete(question);
     }
 
-    public List<Question> searchQuestions(Pageable pageable) {
-        return questionRepository.findAll(pageable).toList();
+    public QuestionSearchDTO searchQuestions(Pageable pageable) {
+        List<SimpleQuestionDTO> questions = questionRepository.findAll(pageable)
+                .stream()
+                .map(item -> {
+                    return new SimpleQuestionDTO(
+                            "",
+                            item.getTitle(),
+                            item.getPrice(),
+                            50,
+                            50,
+                            100,
+                            item.getCreatedAt()
+                    );
+                }).toList();
+
+        return new QuestionSearchDTO(pageable, questions);
     }
 
     // 이미지 파일 저장 (내부 전용)

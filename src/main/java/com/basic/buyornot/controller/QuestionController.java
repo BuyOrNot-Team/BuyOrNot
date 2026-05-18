@@ -2,6 +2,7 @@ package com.basic.buyornot.controller;
 
 import com.basic.buyornot.dto.QuestionDetailDTO;
 import com.basic.buyornot.dto.QuestionFormDTO;
+import com.basic.buyornot.dto.QuestionSearchDTO;
 import com.basic.buyornot.entity.Question;
 import com.basic.buyornot.service.QuestionService;
 import jakarta.validation.Valid;
@@ -98,10 +99,10 @@ public class QuestionController {
     @GetMapping
     public String getQuestions(
             Model model,
-            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size = 6, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
         System.out.println(pageable.getSort());
-        List<Question> questions = questionService.searchQuestions(pageable);
+        QuestionSearchDTO questions = questionService.searchQuestions(pageable);
         model.addAttribute("pageable", pageable);
         model.addAttribute("questions", questions);
         return "question/list";
