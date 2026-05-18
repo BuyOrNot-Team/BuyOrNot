@@ -34,7 +34,7 @@
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100 mb-3">로그인</button>
+                            <button type="submit" class="btn btn-green w-100 mb-3">로그인</button>
 
                             <a href="/oauth2/authorization/google" class="btn btn-outline-danger w-100">
                                 구글로 로그인
@@ -43,7 +43,8 @@
                         </form>
 
                         <div class="text-center mt-3">
-                            <a th:href="@{/signup}">계정이 없으신가요? 회원가입</a>
+                            계정이 없으신가요?
+                            <a th:href="@{/signup}" style="color: var(--buy-green);"> 회원가입</a>
                         </div>
                     </div>
                 </div>

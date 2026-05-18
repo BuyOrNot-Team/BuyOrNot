@@ -17,7 +17,7 @@
 
                         <form th:action="@{/signup}" th:object="${memberForm}" method="post">
                             <div class="mb-3">
-                                <label for="username" class="form-label">아이디</label>
+                                <label for="username" class="form-label">아이디 <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="username" th:field="*{username}"
                                        th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'"
                                        placeholder="영문, 숫자 4자 이상">
@@ -25,7 +25,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="password" class="form-label">비밀번호</label>
+                                <label for="password" class="form-label">비밀번호 <span class="text-danger">*</span></label>
                                 <input type="password" class="form-control" id="password" th:field="*{password}"
                                        th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
                                        placeholder="8자 이상">
@@ -33,21 +33,21 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="passwordConfirm" class="form-label">비밀번호 확인</label>
+                                <label for="passwordConfirm" class="form-label">비밀번호 확인 <span class="text-danger">*</span></label>
                                 <input type="password" class="form-control" id="passwordConfirm" th:field="*{passwordConfirm}"
                                        th:classappend="${#fields.hasErrors('passwordConfirm')} ? 'is-invalid'">
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></div>
                             </div>
 
                             <div class="mb-3">
-                                <label for="nickname" class="form-label">닉네임</label>
+                                <label for="nickname" class="form-label">닉네임 <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="nickname" th:field="*{nickname}"
                                        th:classappend="${#fields.hasErrors('nickname')} ? 'is-invalid'">
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}"></div>
                             </div>
 
                             <div class="mb-3">
-                                <label for="email" class="form-label">이메일</label>
+                                <label for="email" class="form-label">이메일 <span class="text-danger">*</span></label>
                                 <input type="email" class="form-control" id="email" th:field="*{email}"
                                        th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
                                        placeholder="example@email.com">
@@ -78,11 +78,12 @@
                                 <div class="form-text text-muted mt-1">버튼에 마우스를 올리면 설명이 나타납니다.</div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100">회원가입</button>
+                            <button type="submit" class="btn btn-green w-100">회원가입</button>
                         </form>
 
                         <div class="text-center mt-3">
-                            <a th:href="@{/login}">이미 계정이 있으신가요? 로그인</a>
+                            이미 계정이 있으신가요?
+                            <a th:href="@{/login}" style="color: var(--buy-green);"> 로그인</a>
                         </div>
                     </div>
                 </div>
