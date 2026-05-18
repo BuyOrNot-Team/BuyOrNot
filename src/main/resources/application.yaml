@@ -24,4 +24,4 @@ spring:
 
 file:
   upload:
-    path: src/main/resources/static/uploads/productImages/
+    path: ${FILE_UPLOAD_PATH} # 이미지 저장 경로. 각자 경로로 설정해주세요.
