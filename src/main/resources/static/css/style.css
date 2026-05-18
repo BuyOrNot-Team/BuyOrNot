@@ -44,6 +44,20 @@ body {
     border-color: var(--buy-green);
 }
 
+/*navBar의 드롭다운*/
+.dropdown-nickname {
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    display: block;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.dropdown-menu .dropdown-item {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
 /* footer 설정 */
 footer {
     width: 100%;

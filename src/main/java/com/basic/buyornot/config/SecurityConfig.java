@@ -1,5 +1,7 @@
 package com.basic.buyornot.config;
 
+import com.basic.buyornot.service.OAuthMemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,7 +12,11 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final OAuthMemberService oAuthMemberService;
+    private final OAuthSuccessHandler oAuthSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -21,17 +27,21 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/signup", "/login", "/css/**", "/js/**", "/images/**").permitAll()
-                .requestMatchers("/mypage", "/mypage/consumer-type", "/member/delete").authenticated()
-                // 질문 작성(/question/form), 답변 작성 등 로그인 필요 URL은 해당 기능 구현 시 추가
+                .requestMatchers("/signup", "/signup/oauth", "/login", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/mypage/**", "/member/delete").authenticated()
                 .anyRequest().permitAll()
             )
             .formLogin(form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/", true) // 성공 시 이동 페이지
+                .defaultSuccessUrl("/", true)
                 .failureUrl("/login?error=true")
                 .permitAll()
+            )
+            .oauth2Login(oauth -> oauth
+                .loginPage("/login")
+                .userInfoEndpoint(info -> info.userService(oAuthMemberService))
+                .successHandler(oAuthSuccessHandler)
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
