@@ -120,6 +120,7 @@ public class QuestionService {
                 .stream()
                 .map(item -> {
                     return new SimpleQuestionDTO(
+                            item.getQuestionId(),
                             "",
                             item.getTitle(),
                             item.getPrice(),

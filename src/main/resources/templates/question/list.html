@@ -12,36 +12,36 @@
         등록된 질문이 없습니다. 첫 질문을 작성해 보세요!
     </div>
 
-    <div class="d-flex">
+    <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <div>
                 <div class="filter-label mb-2">카테고리</div>
                 <div class="d-flex flex-wrap gap-2">
-                    <button class="chip active" data-group="cat">전체</button>
-                    <button class="chip" data-group="cat">전자기기</button>
-                    <button class="chip" data-group="cat">패션</button>
-                    <button class="chip" data-group="cat">음식</button>
-                    <button class="chip" data-group="cat">뷰티</button>
-                    <button class="chip" data-group="cat">생활</button>
+                    <button class="ps-1 pe-1 chip active" data-group="cat">전체</button>
+                    <button class="ps-1 pe-1 chip" data-group="cat">전자기기</button>
+                    <button class="ps-1 pe-1 chip" data-group="cat">패션</button>
+                    <button class="ps-1 pe-1 chip" data-group="cat">음식</button>
+                    <button class="ps-1 pe-1 chip" data-group="cat">뷰티</button>
+                    <button class="ps-1 pe-1 chip" data-group="cat">생활</button>
                 </div>
             </div>
 
             <div>
                 <div class="filter-label mb-2">가격대</div>
                 <div class="d-flex flex-wrap gap-2">
-                    <button class="chip" data-group="price">~1만</button>
-                    <button class="chip active" data-group="price">1~10</button>
-                    <button class="chip" data-group="price">10~50만</button>
-                    <button class="chip" data-group="price">50만+</button>
+                    <button class="ps-1 pe-1 chip" data-group="price">~1만</button>
+                    <button class="ps-1 pe-1 chip active" data-group="price">1~10</button>
+                    <button class="ps-1 pe-1 chip" data-group="price">10~50만</button>
+                    <button class="ps-1 pe-1 chip" data-group="price">50만+</button>
                 </div>
             </div>
 
             <div>
                 <div class="filter-label mb-2">커뮤니티 의견</div>
                 <div class="d-flex flex-wrap gap-2">
-                    <button class="chip buy-chip active">살래 우세</button>
-                    <button class="chip pass-chip active">말래 우세</button>
-                    <button class="chip">팽팽</button>
+                    <button class="ps-1 pe-1 chip buy-chip active">살래 우세</button>
+                    <button class="ps-1 pe-1 chip pass-chip active">말래 우세</button>
+                    <button class="ps-1 pe-1 chip">팽팽</button>
                 </div>
             </div>
         </div>
@@ -51,33 +51,33 @@
                  th:unless="${#lists.isEmpty(questions.getQuestions())}">
                 <span class="q-count">질문 238개</span>
                 <div class="d-flex gap-2">
-                    <button class="sort-btn active">최신순</button>
-                    <button class="sort-btn">인기순</button>
-                    <button class="sort-btn">답변 많은 순</button>
+                    <a th:href="@{/questions?sort=createdAt,desc&page=0}" class="btn rounded-pill px-4 py-2" th:classappend="${sortType=='createdAt'}? 'btn-green' : 'btn-white'">최신순</a>
+                    <a th:href="@{/questions?sort=viewCount,desc&page=0}" class="btn rounded-pill px-4 py-2" th:classappend="${sortType=='viewCount'}? 'btn-green' : 'btn-white'">인기순</a>
+                    <!--<a class="sort-btn">답변 많은 순</a>-->
                 </div>
             </div>
 
             <div class="container mt-5">
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <div class="col" th:each="question: ${questions.getQuestions()}">
-                        <div class="card h-100 p-3 shadow-sm">
-                            <div class="card-title-text mb-2" th:text="${question.getTitle()}">제목</div>
-                            <div class="card-price mb-3" th:text="${question.getPrice()}">가격</div>
+                <div class="row g-4">
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3" th:each="question: ${questions.getQuestions()}">
+                        <a th:href="@{/questions/{questionId}(questionId=${question.getQuestionId()})}" class="card h-100 p-3 shadow-sm text-decoration-none">
+                            <span class="text-black fs-5" th:text="${question.getTitle()}">제목</span>
+                            <span class="text-muted fs-6" th:text="${question.getPrice()}">가격</span>
 
                             <div class="mb-1">
                                 <div class="mb-1">
                                     <div class="bar-buy" style="width:${question.getBuyRatio()}%"></div>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <span class="vote-buy" th:text="${question.getBuyRatio()}">살래 50%</span>
-                                    <span class="vote-not-buy" th:text="${question.getNotBuyRatio()}">말래 50%</span>
+                                    <span class="text-green fs-6" th:text="|살래 ${question.getBuyRatio()}|">살래 50%</span>
+                                    <span class="text-red fs-6" th:text="|말래 ${question.getNotBuyRatio()}|">말래 50%</span>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <span class="meta-answers" th:text="${question.getAnswerCount()}">답변 50개</span>
-                                <span class="meta-time" th:text="${question.getTimeAgo()}">1시간 전</span>
+                                <span class="text-muted fs-6 fw-bold" th:text="|답변 ${question.getAnswerCount()}개|">답변 50개</span>
+                                <span class="text-muted fs-6" th:text="${question.getTimeAgo()}">1시간 전</span>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>

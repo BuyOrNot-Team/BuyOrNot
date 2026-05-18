@@ -3,7 +3,6 @@ package com.basic.buyornot.controller;
 import com.basic.buyornot.dto.QuestionDetailDTO;
 import com.basic.buyornot.dto.QuestionFormDTO;
 import com.basic.buyornot.dto.QuestionSearchDTO;
-import com.basic.buyornot.entity.Question;
 import com.basic.buyornot.service.QuestionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/questions")
@@ -99,11 +97,11 @@ public class QuestionController {
     @GetMapping
     public String getQuestions(
             Model model,
-            @PageableDefault(size = 6, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size = 12, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        System.out.println(pageable.getSort());
         QuestionSearchDTO questions = questionService.searchQuestions(pageable);
         model.addAttribute("pageable", pageable);
+        model.addAttribute("sortType", pageable.getSort().stream().findFirst().get().getProperty());
         model.addAttribute("questions", questions);
         return "question/list";
     }

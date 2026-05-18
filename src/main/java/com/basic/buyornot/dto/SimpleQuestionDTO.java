@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class SimpleQuestionDTO {
+    private Long questionId;
     private String productCategory;
     private String title;
     private String price;
@@ -32,7 +33,8 @@ public class SimpleQuestionDTO {
         return StringFormatter.formatTimeAgo(createAt);
     }
 
-    public SimpleQuestionDTO(String productCategory, String title, Integer price, Integer buyCount, Integer notBuyCount, Integer answerCount, LocalDateTime createAt) {
+    public SimpleQuestionDTO(Long questionId, String productCategory, String title, Integer price, Integer buyCount, Integer notBuyCount, Integer answerCount, LocalDateTime createAt) {
+        this.questionId = questionId;
         this.productCategory = productCategory;
         this.title = title;
         this.price = StringFormatter.formatPrice(price);
