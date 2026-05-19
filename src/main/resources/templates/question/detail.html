@@ -67,8 +67,9 @@
         </div>
     </div>
 
-    <!-- 수정/삭제 -->
-    <div class="d-flex gap-2 mb-5">
+    <!-- 수정/삭제 - 작성자 본인에게만 노출 -->
+    <div th:if="${currentMemberId != null and question.memberId == currentMemberId}"
+         class="d-flex gap-2 mb-5">
         <a th:href="@{/questions/{id}/edit(id=${question.questionId})}"
            class="btn btn-sm btn-outline-secondary">수정</a>
         <form th:action="@{/questions/{id}/delete(id=${question.questionId})}" method="post"
