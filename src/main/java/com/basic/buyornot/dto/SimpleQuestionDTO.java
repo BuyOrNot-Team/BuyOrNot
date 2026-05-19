@@ -18,11 +18,11 @@ public class SimpleQuestionDTO {
     private LocalDateTime createAt;
 
     public String getBuyRatio() {
-        return String.format("%.1f", (double)getBuyCount() / getVoteCount());
+        return String.format("%.1f", (double)getBuyCount() / getVoteCount() * 100.0);
     }
 
     public String getNotBuyRatio() {
-        return String.format("%.1f", (double)getNotBuyCount() / getVoteCount());
+        return String.format("%.1f", (double)getNotBuyCount() / getVoteCount() * 100.0);
     }
 
     public Integer getVoteCount() {
