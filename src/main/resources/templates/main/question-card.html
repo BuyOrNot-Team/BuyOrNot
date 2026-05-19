@@ -1,0 +1,25 @@
+<article th:fragment="qCard(question)" class="card q-card h-100 p-4">
+    <div class="d-flex justify-content-between mb-2">
+        <h5 class="card-title fw-bold mb-1 text-truncate" th:text="${question.getTitle()}">제품명</h5>
+    </div>
+
+    <p class="text-secondary fw-semibold mb-3"
+       th:text="${#strings.contains(question.getPrice(), '₩')} ? ${question.getPrice()} : |₩${question.getPrice()}|">₩99,000</p>
+
+    <div class="mt-auto">
+        <div class="vote-progress mb-2">
+            <div class="progress-bar" th:style="'width: ' + ${question.getBuyRatio()} + '%; background-color: var(--buy-green);'"></div>
+        </div>
+        <div class="d-flex justify-content-between font-weight-bold small">
+            <span class="text-success fw-bold" th:text="|살래 ${question.getBuyRatio()}%|">살래 50%</span>
+            <span class="text-danger fw-bold" th:text="|말래 ${question.getNotBuyRatio()}%|">말래 50%</span>
+        </div>
+
+        <hr class="my-2" style="border-color: #EDEDED;">
+
+        <div class="d-flex justify-content-between align-items-center text-muted small">
+            <span th:text="|💬 답변 ${question.getAnswerCount()}개|">💬 답변 7개</span>
+            <span th:text="${question.getTimeAgo()}">방금 전</span>
+        </div>
+    </div>
+</article>
