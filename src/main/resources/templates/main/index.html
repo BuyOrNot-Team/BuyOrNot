@@ -15,8 +15,8 @@
 
                 <div class="col-xl-6" th:unless="${#lists.isEmpty(topQuestions)}">
                     <div class="rounded-4 p-4 h-100" style="background-color: var(--mal-light-red);">
-                        <h4 class="fw-bold mb-3" style="color: var(--brand-black);">
-                            <span style="color: var(--mal-red);">🔥 지금 난리난</span> 인기 질문
+                        <h4 class="fw-bold mb-3" style="color: var(--mal-red);">
+                            🔥 인기 질문
                         </h4>
                         <div class="row g-3" th:classappend="${#lists.size(topQuestions) == 1} ? 'justify-content-center' : ''">
                             <div class="col-md-6" th:each="question : ${topQuestions}">
@@ -30,8 +30,8 @@
 
                 <div class="col-xl-6" th:unless="${#lists.isEmpty(latestQuestions)}">
                     <div class="rounded-4 p-4 h-100" style="background-color: var(--buy-light-green);">
-                        <h4 class="fw-bold mb-3" style="color: var(--brand-black);">
-                            <span style="color: var(--buy-green);">✨ 방금 들어온</span> 최신 등록
+                        <h4 class="fw-bold mb-3" style="color: var(--buy-green);">
+                            ✨ 최신 질문
                         </h4>
                         <div class="row g-3" th:classappend="${#lists.size(latestQuestions) == 1} ? 'justify-content-center' : ''">
                             <div class="col-md-6" th:each="question : ${latestQuestions}">
