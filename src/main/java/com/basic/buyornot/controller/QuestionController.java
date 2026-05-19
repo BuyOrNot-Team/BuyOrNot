@@ -2,9 +2,13 @@ package com.basic.buyornot.controller;
 
 import com.basic.buyornot.dto.QuestionDetailDTO;
 import com.basic.buyornot.dto.QuestionFormDTO;
+import com.basic.buyornot.dto.QuestionSearchDTO;
 import com.basic.buyornot.service.QuestionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,13 +59,13 @@ public class QuestionController {
         QuestionDetailDTO question = questionService.getQuestion(id);
 
         QuestionFormDTO dto = QuestionFormDTO.builder()
-            .title(question.getTitle())
-            .content(question.getContent())
-            .productName(question.getProductName())
-            .price(question.getPrice())
-            .pros(question.getPros())
-            .cons(question.getCons())
-            .build();
+                .title(question.getTitle())
+                .content(question.getContent())
+                .productName(question.getProductName())
+                .price(question.getPrice())
+                .pros(question.getPros())
+                .cons(question.getCons())
+                .build();
 
         model.addAttribute("questionFormDTO", dto);
         model.addAttribute("questionId", id);
@@ -88,5 +92,19 @@ public class QuestionController {
     public String delete(@PathVariable Long id) {
         questionService.delete(id, TEMP_MEMBER_ID);
         return "redirect:/questions";
+    }
+
+    @GetMapping
+    public String getQuestions(
+            Model model,
+            @RequestParam(name = "q", required = false, defaultValue = "") String searchText,
+            @PageableDefault(size = 12, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        QuestionSearchDTO questionsDTO = questionService.searchQuestions(searchText, pageable);
+        model.addAttribute("pageable", pageable);
+        model.addAttribute("sortType", pageable.getSort().stream().findFirst().get().getProperty());
+        model.addAttribute("questions", questionsDTO);
+        model.addAttribute("searchText", searchText);
+        return "question/list";
     }
 }
