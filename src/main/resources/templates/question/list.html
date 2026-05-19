@@ -51,8 +51,12 @@
                  th:unless="${#lists.isEmpty(questions.getQuestions())}">
                 <span th:text="|질문 ${questions.getTotalItemCount}개|">질문 1개</span>
                 <div class="d-flex gap-2">
-                    <a th:href="@{/questions(sort='createdAt,desc', page=0, q=${searchText})}" class="btn rounded-pill px-4 py-2" th:classappend="${sortType=='createdAt'}? 'btn-green' : 'btn-white'">최신순</a>
-                    <a th:href="@{/questions(sort='viewCount,desc', page=0, q=${searchText})}" class="btn rounded-pill px-4 py-2" th:classappend="${sortType=='viewCount'}? 'btn-green' : 'btn-white'">인기순</a>
+                    <a th:href="@{/questions(sort='createdAt,desc', page=0, q=${searchText})}"
+                       class="btn rounded-pill px-4 py-2"
+                       th:classappend="${sortType=='createdAt'}? 'btn-green' : 'btn-white'">최신순</a>
+                    <a th:href="@{/questions(sort='viewCount,desc', page=0, q=${searchText})}"
+                       class="btn rounded-pill px-4 py-2"
+                       th:classappend="${sortType=='viewCount'}? 'btn-green' : 'btn-white'">인기순</a>
                     <!--<a class="sort-btn">답변 많은 순</a>-->
                 </div>
             </div>
@@ -60,34 +64,62 @@
             <div class="container mt-5">
                 <div class="row g-4">
                     <div class="col-12 col-sm-6 col-lg-4 col-xl-3" th:each="question: ${questions.getQuestions()}">
-                        <a th:href="@{/questions/{questionId}(questionId=${question.getQuestionId()})}" class="card h-100 p-3 shadow-sm text-decoration-none">
+                        <div class="card h-100 p-3 shadow-sm shadow-on-hover">
+                            <a class="stretched-link text-decoration-none"
+                               th:href="@{/questions/{questionId}(questionId=${question.getQuestionId()})}"></a>
                             <span class="text-black fs-5" th:text="${question.getTitle()}">제목</span>
-                            <span class="text-muted fs-6" th:text="${question.getPrice()}">가격</span>
+                            <span class="text-muted fs-6 mt-3" th:text="${question.getPrice()}">가격</span>
 
                             <div class="mb-1">
-                                <div class="mb-1">
-                                    <div class="bar-buy" style="width:${question.getBuyRatio()}%"></div>
+                                <div class="progress mt-3" style="height: 2px;">
+                                    <div class="progress-bar bg-success"
+                                         role="progressbar"
+                                         th:style="|width: ${question.getBuyRatioPercentage()}%|">
+                                    </div>
+
+                                    <div class="progress-bar bg-danger"
+                                         role="progressbar"
+                                         th:style="|width: ${question.getNotBuyRatioPercentage()}%|">
+                                    </div>
                                 </div>
-                                <div class="d-flex justify-content-between">
-                                    <span class="text-green fs-6" th:text="|살래 ${question.getBuyRatio()}|">살래 50%</span>
-                                    <span class="text-red fs-6" th:text="|말래 ${question.getNotBuyRatio()}|">말래 50%</span>
+                                <div class="d-flex justify-content-between mt-1">
+                                    <span class="text-success fs-6" th:text="|살래 ${question.getBuyRatioPercentage()}%|">살래 50%</span>
+                                    <span class="text-danger fs-6"
+                                          th:text="|말래 ${question.getNotBuyRatioPercentage()}%|">말래 50%</span>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-between">
-                                <span class="text-muted fs-6 fw-bold" th:text="|답변 ${question.getAnswerCount()}개|">답변 50개</span>
+                            <div class="d-flex justify-content-between mt-4">
+                            <span class="text-muted fs-6 fw-bold"
+                                  th:text="|답변 ${question.getAnswerCount()}개|">답변 50개</span>
                                 <span class="text-muted fs-6" th:text="${question.getTimeAgo()}">1시간 전</span>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+            <ul class="pagination"
+                th:with="
+        start=${(pageable.getPageNumber()) < 5 ? 1 : pageable.getPageNumber()-4},
+        end=${(start + 8 < questions.getTotalPageCount()) ? start + 8 : questions.getTotalPageCount()}
+      ">
+                <th:block th:if="${end > 0}">
+                    <li class="page-item"
+                        th:each="page : ${#numbers.sequence(start, end)}"
+                        th:classappend="${page - 1 == pageable.getPageNumber()} ? 'active'">
+                        <a class="page-link"
+                           th:href="@{/questions(sort=|${sortType},desc|, page=${page-1}, q=${searchText})}"
+                           th:text="${page}">1</a>
+                    </li>
+                </th:block>
+            </ul>
+        </nav>
     </div>
-</div>
 
-<th:block layout:fragment="script">
-    <!-- common.js 이외의 js 파일 import가 필요한 경우 아래와 같이 사용 -->
-    <!--<script th:src="@{/js/파일명.js}"></script>-->
-</th:block>
+    <th:block layout:fragment="script">
+        <!-- common.js 이외의 js 파일 import가 필요한 경우 아래와 같이 사용 -->
+        <!--<script th:src="@{/js/파일명.js}"></script>-->
+    </th:block>
 </body>
 </html>
