@@ -191,3 +191,53 @@ footer {
     font-size: 0.9rem;
     color: #fff;
 }
+
+/* 질문 카드 설정 */
+.q-card {
+    background-color: white;
+    border-radius: 20px;
+    color: var(--brand-black);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+}
+.q-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* 게이지 바 디자인 */
+.vote-progress {
+    height: 8px;
+    background-color: #E0E0E0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* 둥근 배지 및 필터 */
+.filter-chip {
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid #E0E0E0;
+    background: white;
+    color: #666;
+    cursor: pointer;
+}
+.filter-chip.active {
+    background: var(--brand-black);
+    color: white;
+    border-color: var(--brand-black);
+}
+
+/* 질문 목록 설정 */
+.main-bg {
+    background-color: #1A1A1A; /* 우측 리스트 배경 */
+    color: white;
+}
+
+.sidebar-bg {
+    background-color: var(--brand-surface); /* 좌측 필터링 배경 */
+    color: var(--brand-black);
+    border-right: 1px solid var(--brand-border);
+}
