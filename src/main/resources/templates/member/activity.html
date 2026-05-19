@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+    <head>
+        <title>나의 활동</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <h2 class="mb-4">나의 활동</h2>
+
+                        <!-- 섹션 토글 버튼 -->
+                        <div class="d-flex gap-2 mb-4">
+                            <button id="btnQuestions" class="btn btn-primary"
+                                    onclick="showSection('questions')">
+                                작성한 글
+                                <span class="badge bg-white text-dark ms-1" th:text="${questionCount}">0</span>
+                            </button>
+                            <!-- TODO: 답변 기능 구현 후 활성화
+                            <button id="btnAnswers" class="btn btn-outline-primary"
+                                    onclick="showSection('answers')">
+                                작성한 답변
+                                <span class="badge bg-primary text-white ms-1" th:text="${answerCount}">0</span>
+                            </button>
+                            -->
+                            <button id="btnAnswers" class="btn btn-outline-primary" disabled>
+                                작성한 답변
+                                <span class="badge bg-secondary text-white ms-1" th:text="${answerCount}">0</span>
+                            </button>
+                        </div>
+
+                        <!-- 작성한 질문 목록 -->
+                        <div id="questionsSection">
+                            <div th:if="${#lists.isEmpty(myQuestions)}"
+                                 class="text-center text-muted py-5">
+                                아직 작성한 질문이 없습니다.
+                            </div>
+                            <div th:each="q : ${myQuestions}"
+                                 class="card mb-3 activity-card"
+                                 style="cursor: pointer;"
+                                 th:onclick="|location.href='/questions/' + ${q.questionId}|">
+                                <div class="card-body py-3">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
+                                        <div class="flex-grow-1 overflow-hidden">
+                                            <p class="mb-1 fw-semibold text-truncate" th:text="${q.title}"></p>
+                                            <small class="text-muted" th:text="${q.productName}"></small>
+                                        </div>
+                                        <div class="text-end text-muted small flex-shrink-0">
+                                            <div th:text="${#temporals.format(q.createdAt, 'yyyy-MM-dd')}"></div>
+                                            <div>조회 <span th:text="${q.viewCount}"></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TODO: 답변 기능 구현 후 활성화
+                        <div id="answersSection" style="display: none;">
+                            <div th:if="${#lists.isEmpty(myAnswers)}"
+                                 class="text-center text-muted py-5">
+                                아직 작성한 답변이 없습니다.
+                            </div>
+                            <div th:each="a : ${myAnswers}"
+                                 class="card mb-3 activity-card"
+                                 style="cursor: pointer;"
+                                 th:onclick="|location.href='/questions/' + ${a.question.questionId}|">
+                                <div class="card-body py-3">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
+                                        <div class="flex-grow-1 overflow-hidden">
+                                            <p class="mb-1 text-truncate" th:text="${a.content}"></p>
+                                            <small class="text-muted" th:text="${a.question.title}"></small>
+                                        </div>
+                                        <div class="text-end text-muted small flex-shrink-0">
+                                            <div th:text="${#temporals.format(a.createdAt, 'yyyy-MM-dd')}"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+
+                        <div class="mt-4">
+                            <a th:href="@{/mypage}" class="btn btn-outline-secondary btn-sm">← 마이페이지로</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <th:block layout:fragment="script">
+            <script>
+                function showSection(section) {
+                    const isQuestions = section === 'questions';
+                    document.getElementById('questionsSection').style.display = isQuestions ? 'block' : 'none';
+                    // TODO: 답변 기능 구현 후 활성화
+                    // document.getElementById('answersSection').style.display = isQuestions ? 'none' : 'block';
+
+                    document.getElementById('btnQuestions').className = isQuestions
+                        ? 'btn btn-primary'
+                        : 'btn btn-outline-primary';
+                    // document.getElementById('btnAnswers').className = isQuestions
+                    //     ? 'btn btn-outline-primary'
+                    //     : 'btn btn-primary';
+                }
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    document.querySelectorAll('.activity-card').forEach(function (card) {
+                        card.addEventListener('mouseenter', function () {
+                            this.classList.add('shadow-sm');
+                        });
+                        card.addEventListener('mouseleave', function () {
+                            this.classList.remove('shadow-sm');
+                        });
+                    });
+                });
+            </script>
+        </th:block>
+    </body>
+</html>

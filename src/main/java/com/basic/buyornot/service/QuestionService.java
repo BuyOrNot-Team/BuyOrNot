@@ -116,6 +116,10 @@ public class QuestionService {
         questionRepository.delete(question);
     }
 
+    public List<Question> getMyQuestions(Member member) {
+        return questionRepository.findByMemberOrderByCreatedAtDesc(member);
+    }
+
     public QuestionSearchDTO searchQuestions(String searchText, Pageable pageable) {
         Page<Question> questionsPage = questionRepository.findByTitleContaining(searchText, pageable);
         List<SimpleQuestionDTO> questions = questionsPage.stream()

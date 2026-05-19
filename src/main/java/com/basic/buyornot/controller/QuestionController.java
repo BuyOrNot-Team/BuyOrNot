@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import com.basic.buyornot.config.PrincipalDetails;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,8 +25,8 @@ public class QuestionController {
 
     private final QuestionService questionService;
 
-    // TODO: Spring Security 연동 후 로그인 사용자 ID로 교체
-    private static final Long TEMP_MEMBER_ID = 1L;
+
+    // private static final Long TEMP_MEMBER_ID = 1L; Spring Security 사용자 ID로 교체 완료하였습니다
 
     // 상세
     @GetMapping("/{id}")
@@ -45,11 +47,12 @@ public class QuestionController {
     @PostMapping("/form")
     public String create(@Valid @ModelAttribute QuestionFormDTO questionFormDTO,
                          BindingResult bindingResult,
-                         Model model) throws IOException {
+                         Model model,
+                         @AuthenticationPrincipal PrincipalDetails userDetails) throws IOException {
         if (bindingResult.hasErrors()) {
             return "question/form";
         }
-        Long savedId = questionService.create(questionFormDTO, TEMP_MEMBER_ID);
+        Long savedId = questionService.create(questionFormDTO, userDetails.getMemberId());
         return "redirect:/questions/" + savedId;
     }
 
@@ -78,19 +81,21 @@ public class QuestionController {
     public String edit(@PathVariable Long id,
                        @Valid @ModelAttribute QuestionFormDTO questionFormDTO,
                        BindingResult bindingResult,
-                       Model model) throws IOException {
+                       Model model,
+                       @AuthenticationPrincipal PrincipalDetails userDetails) throws IOException {
         if (bindingResult.hasErrors()) {
             model.addAttribute("questionId", id);
             return "question/edit";
         }
-        questionService.update(id, questionFormDTO, TEMP_MEMBER_ID);
+        questionService.update(id, questionFormDTO, userDetails.getMemberId());
         return "redirect:/questions/" + id;
     }
 
     // 삭제 처리
     @PostMapping("/{id}/delete")
-    public String delete(@PathVariable Long id) {
-        questionService.delete(id, TEMP_MEMBER_ID);
+    public String delete(@PathVariable Long id,
+                         @AuthenticationPrincipal PrincipalDetails userDetails) {
+        questionService.delete(id, userDetails.getMemberId());
         return "redirect:/questions";
     }
 
