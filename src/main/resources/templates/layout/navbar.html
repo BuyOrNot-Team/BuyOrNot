@@ -25,11 +25,16 @@
             <!-- 우측 영역 -->
             <div class="d-flex flex-lg-row flex-column align-items-center ms-auto gap-3 mt-lg-0 mt-4">
                 <!-- 검색창 -->
-                <div class="position-relative w-100 w-lg-auto">
-                    <input class="form-control border-0 rounded-pill px-4"
-                           type="search" placeholder="🔍 검색"
-                           style="width: 100%; min-width: 250px; background-color: #f7f7f7;">
-                </div>
+                <form th:action="@{/questions}" method="get" class="m-0 w-100 w-lg-auto" role="search">
+                    <div class="position-relative w-100 w-lg-auto">
+                        <input class="form-control border-0 rounded-pill px-4"
+                               type="search"
+                               name="q"
+                               th:value="${searchText}"
+                               placeholder="🔍 검색"
+                               style="width: 100%; min-width: 250px; background-color: #f7f7f7;">
+                    </div>
+                </form>
 
                 <!-- 로그인 상태: 프로필 드롭다운 + 질문하기 -->
                 <div th:if="${navMember != null}" class="d-flex align-items-center gap-3 w-100">
