@@ -7,57 +7,55 @@
         <title>전체보기</title>
     </head>
     <body>
-        <div layout:fragment="content">
+        <div layout:fragment="content" class="h-100"> <div class="container-fluid px-5 py-4 d-flex flex-column h-100">
 
-        <div class="container-fluid px-5 py-4">
+        <div class="row g-0 rounded-4 overflow-hidden flex-grow-1 h-100" style="background-color: #222222;">
 
-            <div class="row g-0 rounded-4 overflow-hidden" style="background-color: #222222;">
-
-                <div class="sidebar-bg p-4 col-12 col-lg-3 col-xl-2">
-                    <div class="mb-4">
-                        <h6 class="fw-bold text-muted mb-3">가격대</h6>
-                        <div class="d-flex flex-wrap gap-2">
-                            <button class="filter-chip">~1만</button>
-                            <button class="filter-chip active">1~10만</button>
-                            <button class="filter-chip">10~50만</button>
-                            <button class="filter-chip">50만+</button>
-                        </div>
-                    </div>
-                    <div>
-                        <h6 class="fw-bold text-muted mb-3">커뮤니티 의견</h6>
-                        <div class="d-flex flex-wrap gap-2">
-                            <button class="filter-chip text-success">살래 우세</button>
-                            <button class="filter-chip text-danger">말래 우세</button>
-                            <button class="filter-chip">팽팽</button>
-                        </div>
+            <div class="sidebar-bg p-4 col-12 col-lg-3 col-xl-2 h-100">
+                <div class="mb-4">
+                    <h6 class="fw-bold text-muted mb-3">가격대</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="filter-chip">~1만</button>
+                        <button class="filter-chip active">1~10만</button>
+                        <button class="filter-chip">10~50만</button>
+                        <button class="filter-chip">50만+</button>
                     </div>
                 </div>
-
-                <div class="p-4 col-12 col-lg-9 col-xl-10" style="background-color: #222222;">
-
-                    <div class="d-flex justify-content-between align-items-center mb-4" th:unless="${#lists.isEmpty(questions.getQuestions())}">
-                        <span class="fs-5 fw-bold text-white" th:text="|질문 ${questions.getTotalItemCount}개|">질문 1개</span>
-                        <div class="d-flex gap-2">
-                            <a th:href="@{/questions(sort='createdAt,desc', page=0, q=${searchText})}" class="btn btn-sm rounded-pill px-4 py-2" th:classappend="${sortType=='createdAt'}? 'btn-green' : 'btn-white'">최신순</a>
-                            <a th:href="@{/questions(sort='viewCount,desc', page=0, q=${searchText})}" class="btn btn-sm rounded-pill px-4 py-2" th:classappend="${sortType=='viewCount'}? 'btn-green' : 'btn-white'">인기순</a>
-                        </div>
-                    </div>
-
-                    <div th:if="${#lists.isEmpty(questions.getQuestions())}" class="text-white py-5 text-center fs-5">
-                        등록된 질문이 없습니다. 첫 질문을 작성해 보세요!
-                    </div>
-
-                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" th:unless="${#lists.isEmpty(questions.getQuestions())}">
-                        <div class="col" th:each="question: ${questions.getQuestions()}">
-                            <a th:href="@{/questions/{questionId}(questionId=${question.getQuestionId()})}" class="text-decoration-none d-block h-100">
-                                <div th:replace="~{main/question-card :: qCard(question=${question})}"></div>
-                            </a>
-                        </div>
+                <div>
+                    <h6 class="fw-bold text-muted mb-3">커뮤니티 의견</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="filter-chip text-success">살래 우세</button>
+                        <button class="filter-chip text-danger">말래 우세</button>
+                        <button class="filter-chip">팽팽</button>
                     </div>
                 </div>
-
             </div>
+
+            <div class="p-4 col-12 col-lg-9 col-xl-10" style="background-color: #222222;">
+
+                <div class="d-flex justify-content-between align-items-center mb-4" th:unless="${#lists.isEmpty(questions.getQuestions())}">
+                    <span class="fs-5 fw-bold text-white" th:text="|질문 ${questions.getTotalItemCount}개|">질문 1개</span>
+                    <div class="d-flex gap-2">
+                        <a th:href="@{/questions(sort='createdAt,desc', page=0, q=${searchText})}" class="btn btn-sm rounded-pill px-4 py-2" th:classappend="${sortType=='createdAt'}? 'btn-green' : 'btn-white'">최신순</a>
+                        <a th:href="@{/questions(sort='viewCount,desc', page=0, q=${searchText})}" class="btn btn-sm rounded-pill px-4 py-2" th:classappend="${sortType=='viewCount'}? 'btn-green' : 'btn-white'">인기순</a>
+                    </div>
+                </div>
+
+                <div th:if="${#lists.isEmpty(questions.getQuestions())}" class="text-white py-5 text-center fs-5">
+                    등록된 질문이 없습니다. 첫 질문을 작성해 보세요!
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" th:unless="${#lists.isEmpty(questions.getQuestions())}">
+                    <div class="col" th:each="question: ${questions.getQuestions()}">
+                        <a th:href="@{/questions/{questionId}(questionId=${question.getQuestionId()})}" class="text-decoration-none d-block h-100">
+                            <div th:replace="~{main/question-card :: qCard(question=${question})}"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </div>
 
     </div>
 
