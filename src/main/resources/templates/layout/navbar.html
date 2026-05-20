@@ -55,6 +55,7 @@
                             </li>
                             <li><hr class="dropdown-divider my-1"></li>
                             <li><a class="dropdown-item py-2" th:href="@{/mypage}">마이페이지</a></li>
+                            <li><a class="dropdown-item py-2" th:href="@{/mypage/activity}">나의 활동</a></li>
                             <li>
                                 <form th:action="@{/logout}" method="post" class="m-0">
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">

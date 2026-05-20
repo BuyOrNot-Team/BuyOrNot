@@ -1,5 +1,6 @@
 package com.basic.buyornot.repository;
 
+import com.basic.buyornot.entity.Member;
 import com.basic.buyornot.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
@@ -22,4 +24,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     void incrementViewCount(@Param("id") Long id);
 
     Page<Question> findByTitleContaining(String searchText, Pageable pageable);
+
+    List<Question> findByMemberOrderByCreatedAtDesc(Member member);
 }
