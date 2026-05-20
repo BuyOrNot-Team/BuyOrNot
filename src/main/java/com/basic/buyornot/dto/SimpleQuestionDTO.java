@@ -17,13 +17,11 @@ public class SimpleQuestionDTO {
     private Integer answerCount;
     private LocalDateTime createAt;
 
-    public String getBuyRatio() {
-        return String.format("%.1f", (double)getBuyCount() / getVoteCount() * 100.0);
+    public String getBuyRatioPercentage() {
+        return String.format("%.1f", getBuyCount()*100.0 / getVoteCount());
     }
 
-    public String getNotBuyRatio() {
-        return String.format("%.1f", (double)getNotBuyCount() / getVoteCount() * 100.0);
-    }
+    public String getNotBuyRatioPercentage() {return String.format("%.1f", getNotBuyCount()*100.0 / getVoteCount());}
 
     public Integer getVoteCount() {
         return getBuyCount() + getNotBuyCount();

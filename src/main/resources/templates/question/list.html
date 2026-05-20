@@ -2,16 +2,17 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/base}">
-    <head>
-        <meta charset="UTF-8">
-        <title>전체보기</title>
-    </head>
-    <body>
-        <div layout:fragment="content" class="h-100"> <div class="container-fluid px-5 py-4 d-flex flex-column h-100">
+<head>
+    <meta charset="UTF-8">
+    <title>전체보기</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container-fluid px-5 py-4 d-flex flex-column">
 
-        <div class="row g-0 rounded-4 overflow-hidden flex-grow-1 h-100" style="background-color: #222222;">
+        <div class="row g-0 rounded-4 overflow-hidden flex-grow-1" style="background-color: #222222;">
 
-            <div class="sidebar-bg p-4 col-12 col-lg-3 col-xl-2 h-100">
+            <div class="sidebar-bg p-4 col-12 col-lg-3 col-xl-2">
                 <div class="mb-4">
                     <h6 class="fw-bold text-muted mb-3">가격대</h6>
                     <div class="d-flex flex-wrap gap-2">
@@ -33,11 +34,16 @@
 
             <div class="p-4 col-12 col-lg-9 col-xl-10" style="background-color: #222222;">
 
-                <div class="d-flex justify-content-between align-items-center mb-4" th:unless="${#lists.isEmpty(questions.getQuestions())}">
+                <div class="d-flex justify-content-between align-items-center mb-4"
+                     th:unless="${#lists.isEmpty(questions.getQuestions())}">
                     <span class="fs-5 fw-bold text-white" th:text="|질문 ${questions.getTotalItemCount}개|">질문 1개</span>
                     <div class="d-flex gap-2">
-                        <a th:href="@{/questions(sort='createdAt,desc', page=0, q=${searchText})}" class="btn btn-sm rounded-pill px-4 py-2" th:classappend="${sortType=='createdAt'}? 'btn-green' : 'btn-white'">최신순</a>
-                        <a th:href="@{/questions(sort='viewCount,desc', page=0, q=${searchText})}" class="btn btn-sm rounded-pill px-4 py-2" th:classappend="${sortType=='viewCount'}? 'btn-green' : 'btn-white'">인기순</a>
+                        <a th:href="@{/questions(sort='createdAt,desc', page=0, q=${searchText})}"
+                           class="btn btn-sm rounded-pill px-4 py-2"
+                           th:classappend="${sortType=='createdAt'}? 'btn-green' : 'btn-white'">최신순</a>
+                        <a th:href="@{/questions(sort='viewCount,desc', page=0, q=${searchText})}"
+                           class="btn btn-sm rounded-pill px-4 py-2"
+                           th:classappend="${sortType=='viewCount'}? 'btn-green' : 'btn-white'">인기순</a>
                     </div>
                 </div>
 
@@ -45,9 +51,11 @@
                     등록된 질문이 없습니다. 첫 질문을 작성해 보세요!
                 </div>
 
-                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" th:unless="${#lists.isEmpty(questions.getQuestions())}">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4"
+                     th:unless="${#lists.isEmpty(questions.getQuestions())}">
                     <div class="col" th:each="question: ${questions.getQuestions()}">
-                        <a th:href="@{/questions/{questionId}(questionId=${question.getQuestionId()})}" class="text-decoration-none d-block h-100">
+                        <a th:href="@{/questions/{questionId}(questionId=${question.getQuestionId()})}"
+                           class="text-decoration-none d-block h-100">
                             <div th:replace="~{main/question-card :: qCard(question=${question})}"></div>
                         </a>
                     </div>
@@ -55,11 +63,28 @@
             </div>
 
         </div>
+        <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+            <ul class="pagination gap-2 pagination-clean"
+                th:with="
+        start=${(pageable.getPageNumber()) < 5 ? 1 : pageable.getPageNumber()-4},
+        end=${(start + 8 < questions.getTotalPageCount()) ? start + 8 : questions.getTotalPageCount()}
+      ">
+                <th:block th:if="${end > 0}">
+                    <li class="page-item"
+                        th:each="page : ${#numbers.sequence(start, end)}"
+                        th:classappend="${page - 1 == pageable.getPageNumber()} ? 'active'">
+                        <a class="page-link rounded-circle"
+                           th:href="@{/questions(sort=|${sortType},desc|, page=${page-1}, q=${searchText})}"
+                           th:text="${page}">1</a>
+                    </li>
+                </th:block>
+            </ul>
+        </nav>
     </div>
 
-    </div>
+</div>
 
-        <th:block layout:fragment="script">
-        </th:block>
-    </body>
+<th:block layout:fragment="script">
+</th:block>
+</body>
 </html>
