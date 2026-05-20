@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -11,33 +12,13 @@
 
     <div class="container-fluid px-5 py-4 d-flex flex-column flex-grow-1">
 
-        <div class="row g-0 rounded-4 overflow-hidden flex-grow-1" style="background-color: #222222; min-height: 0;">
+        <div class="row g-0 rounded-4 overflow-hidden flex-grow-1 sidebar-bg" style="min-height: 0;">
 
-            <div class="sidebar-bg p-4 col-12 col-lg-3 col-xl-2 h-lg-100">
-                <div class="mb-4">
-                    <h6 class="fw-bold text-muted mb-3">가격대</h6>
-                    <div class="d-flex flex-wrap gap-2">
-                        <button class="filter-chip">~1만</button>
-                        <button class="filter-chip active">1~10만</button>
-                        <button class="filter-chip">10~50만</button>
-                        <button class="filter-chip">50만+</button>
-                    </div>
-                </div>
-                <div>
-                    <h6 class="fw-bold text-muted mb-3">커뮤니티 의견</h6>
-                    <div class="d-flex flex-wrap gap-2">
-                        <button class="filter-chip text-success"  style="color: var(--buy-green) !important;">살래 우세</button>
-                        <button class="filter-chip text-danger"  style="color: var(--mal-red) !important;">말래 우세</button>
-                        <button class="filter-chip">팽팽</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-4 col-12 col-lg-9 col-xl-10 h-lg-100" style="background-color: #222222; overflow-y: auto;">
+            <div class="p-4 col-12 h-lg-100" style="overflow-y: auto;">
 
                 <div class="d-flex justify-content-between align-items-center mb-4"
                      th:unless="${#lists.isEmpty(questions.getQuestions())}">
-                    <span class="fs-5 fw-bold text-white" th:text="|질문 ${questions.getTotalItemCount}개|">질문 1개</span>
+                    <span class="fs-5 fw-bold" th:text="|질문 ${questions.getTotalItemCount}개|">질문 1개</span>
                     <div class="d-flex gap-2">
                         <a th:href="@{/questions(sort='createdAt,desc', page=0, q=${searchText})}"
                            class="btn btn-sm rounded-pill px-4 py-2"
@@ -52,7 +33,7 @@
                     등록된 질문이 없습니다. 첫 질문을 작성해 보세요!
                 </div>
 
-                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4"
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4"
                      th:unless="${#lists.isEmpty(questions.getQuestions())}">
                     <div class="col" th:each="question: ${questions.getQuestions()}">
                         <a th:href="@{/questions/{questionId}(questionId=${question.getQuestionId()})}"
