@@ -61,8 +61,9 @@
             </div>
         </div>
 
-        <!-- 수정/삭제 -->
-        <div class="d-flex gap-2 mb-5">
+        <!-- 수정/삭제 - 작성자 본인에게만 노출 -->
+        <div th:if="${currentMemberId != null and question.memberId == currentMemberId}"
+             class="d-flex gap-2 mb-5">
             <a th:href="@{/questions/{id}/edit(id=${question.questionId})}"
                 class="btn btn-sm btn-outline-secondary">수정</a>
             <form th:action="@{/questions/{id}/delete(id=${question.questionId})}" method="post"
@@ -79,27 +80,44 @@
         <div th:if="${#lists.isEmpty(answers)}" class="text-muted mb-3">
             아직 등록된 답변이 없습니다.
         </div>
-        <div th:each="answer : ${answers}" class="card mb-3">
+        <div th:each="answer : ${answers}" class="card mb-3"
+             th:classappend="${answer.answerId == question.acceptedAnswerId} ? 'border-success border-2'">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <span class="fw-bold small" th:text="${answer.nickname}"></span>
-                    <span class="text-muted small">
-                        <span th:text="${#temporals.format(answer.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
-                        <span th:if="${answer.updatedAt != null}" class="text-secondary"> (수정됨)</span>
-                    </span>
+                    <div class="d-flex align-items-center gap-2">
+                        <!-- 채택 뱃지 -->
+                        <span th:if="${answer.answerId == question.acceptedAnswerId}"
+                              class="badge bg-success">✔ 채택된 답변</span>
+                        <span class="text-muted small">
+                            <span th:text="${#temporals.format(answer.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                            <span th:if="${answer.updatedAt != null}" class="text-secondary"> (수정됨)</span>
+                        </span>
+                    </div>
                 </div>
                 <span th:if="${answer.recommendation.name() == 'BUY'}" class="badge bg-success mb-2">✅ 살까</span>
                 <span th:if="${answer.recommendation.name() == 'DONT_BUY'}" class="badge bg-danger mb-2">❌ 말까</span>
                 <p th:text="${answer.content}" style="white-space: pre-wrap;" class="mb-2"></p>
-                <!-- 작성자 본인만 수정/삭제 버튼 표시 -->
-                <div th:if="${#authentication.principal != null and #authentication.principal.member.memberId == answer.memberId}"
-                    class="d-flex gap-2">
-                    <a th:href="@{/answers/{id}/edit(id=${answer.answerId})}"
-                        class="btn btn-sm btn-outline-secondary">수정</a>
-                    <form th:action="@{/answers/{id}/delete(id=${answer.answerId})}" method="post"
-                        onsubmit="return confirm('정말 삭제하시겠습니까?')">
-                        <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
+                <div class="d-flex gap-2">
+                    <!-- 질문 작성자에게만 채택 버튼 노출 -->
+                    <form th:if="${currentMemberId != null and question.memberId == currentMemberId}"
+                          th:action="@{/answers/{aId}/accept/{qId}(aId=${answer.answerId}, qId=${question.questionId})}"
+                          method="post">
+                        <button type="submit"
+                                th:text="${answer.answerId == question.acceptedAnswerId} ? '채택 취소' : '채택'"
+                                th:class="${answer.answerId == question.acceptedAnswerId} ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-success'">
+                        </button>
                     </form>
+                    <!-- 답변 작성자 본인만 수정/삭제 버튼 표시 -->
+                    <div th:if="${#authentication.principal != null and #authentication.principal.member.memberId == answer.memberId}"
+                        class="d-flex gap-2">
+                        <a th:href="@{/answers/{id}/edit(id=${answer.answerId})}"
+                            class="btn btn-sm btn-outline-secondary">수정</a>
+                        <form th:action="@{/answers/{id}/delete(id=${answer.answerId})}" method="post"
+                            onsubmit="return confirm('정말 삭제하시겠습니까?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

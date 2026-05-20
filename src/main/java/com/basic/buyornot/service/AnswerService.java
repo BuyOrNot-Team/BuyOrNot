@@ -78,6 +78,29 @@ public class AnswerService {
         return questionId;
     }
 
+    // 답변 채택
+    @Transactional
+    public void accept(Long questionId, Long answerId, Long memberId) {
+        Question question = questionRepository.findByIdWithMember(questionId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문입니다. id=" + questionId));
+
+        // 질문 작성자만 채택 가능
+        if (!question.getMember().getMemberId().equals(memberId)) {
+            throw new SecurityException("채택 권한이 없습니다.");
+        }
+
+        // 이미 채택된 답변이면 취소, 아니면 채택
+        if (answerId.equals(question.getAcceptedAnswerId())) {
+            question.cancelAccept();
+        } else {
+            // 채택하려는 답변이 해당 질문의 답변인지 검증
+            answerRepository.findByIdWithMember(answerId)
+                    .filter(a -> a.getQuestion().getQuestionId().equals(questionId))
+                    .orElseThrow(() -> new IllegalArgumentException("해당 질문의 답변이 아닙니다."));
+            question.acceptAnswer(answerId);
+        }
+    }
+
     // 사용자의 답변 조회
     public List<Answer> getMyAnswers(Member member) {
         return answerRepository.findByMemberOrderByCreatedAtDesc(member);

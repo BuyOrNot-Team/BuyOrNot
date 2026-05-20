@@ -12,8 +12,16 @@ import java.util.Optional;
 
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
-    // 특정 질문의 삭제되지 않은 답변 목록 조회 (member FETCH JOIN)
-    @Query("SELECT a FROM Answer a JOIN FETCH a.member WHERE a.question.questionId = :questionId AND a.deleted = false ORDER BY a.createdAt ASC")
+    // 특정 질문의 삭제되지 않은 답변 목록 조회 - 채택 답변 우선, 이후 등록순
+    @Query("""
+        SELECT a FROM Answer a JOIN FETCH a.member
+        WHERE a.question.questionId = :questionId AND a.deleted = false
+        ORDER BY
+            CASE WHEN a.answerId = (
+                SELECT q.acceptedAnswerId FROM Question q WHERE q.questionId = :questionId
+            ) THEN 0 ELSE 1 END ASC,
+            a.createdAt ASC
+        """)
     List<Answer> findByQuestionIdWithMember(@Param("questionId") Long questionId);
 
     // 단건 조회 (수정/삭제용, member + question FETCH JOIN)
