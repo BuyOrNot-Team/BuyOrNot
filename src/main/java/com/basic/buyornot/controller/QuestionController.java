@@ -1,8 +1,10 @@
 package com.basic.buyornot.controller;
 
+import com.basic.buyornot.dto.AnswerFormDTO;
 import com.basic.buyornot.dto.QuestionDetailDTO;
 import com.basic.buyornot.dto.QuestionFormDTO;
 import com.basic.buyornot.dto.QuestionSearchDTO;
+import com.basic.buyornot.service.AnswerService;
 import com.basic.buyornot.service.QuestionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import java.io.IOException;
 public class QuestionController {
 
     private final QuestionService questionService;
+    private final AnswerService answerService;
 
     // TODO: Spring Security 연동 후 로그인 사용자 ID로 교체
     private static final Long TEMP_MEMBER_ID = 1L;
@@ -31,6 +34,8 @@ public class QuestionController {
     public String detail(@PathVariable Long id, Model model) {
         QuestionDetailDTO question = questionService.getQuestion(id);
         model.addAttribute("question", question);
+        model.addAttribute("answers", answerService.getAnswers(id));
+        model.addAttribute("answerFormDTO", new AnswerFormDTO());
         return "question/detail";
     }
 
