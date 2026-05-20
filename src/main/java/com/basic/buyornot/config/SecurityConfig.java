@@ -32,8 +32,11 @@ public class SecurityConfig {
                     "/mypage/**",
                     "/member/delete",
                     "/questions/form",
+                     "/answers/new/*",
                     "/questions/*/edit",
-                    "/questions/*/delete"
+                    "/answers/*/edit",
+                    "/questions/*/delete",
+                    "/answers/*/delete"
                 ).authenticated()
                 .anyRequest().permitAll()
             )
