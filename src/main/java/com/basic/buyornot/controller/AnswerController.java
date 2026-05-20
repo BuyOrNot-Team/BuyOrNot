@@ -38,6 +38,7 @@ public class AnswerController {
         AnswerDetailDTO answer = answerService.getAnswer(id);
         AnswerFormDTO form = new AnswerFormDTO();
         form.setContent(answer.getContent());
+        form.setRecommendation(answer.getRecommendation()); // 기존 살까/말까 값 유지
         model.addAttribute("answer", answer);
         model.addAttribute("answerFormDTO", form);
         return "answer/edit";
