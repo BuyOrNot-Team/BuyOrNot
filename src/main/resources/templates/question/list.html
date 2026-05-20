@@ -7,12 +7,13 @@
     <title>전체보기</title>
 </head>
 <body>
-<div layout:fragment="content">
-    <div class="container-fluid px-5 py-4 d-flex flex-column">
+<div layout:fragment="content" class="d-flex flex-column" style="min-height: calc(100vh - 78px); background-color: #ffffff;">
+
+    <div class="container-fluid px-5 py-4 d-flex flex-column flex-grow-1">
 
         <div class="row g-0 rounded-4 overflow-hidden flex-grow-1" style="background-color: #222222;">
 
-            <div class="sidebar-bg p-4 col-12 col-lg-3 col-xl-2">
+            <div class="sidebar-bg p-4 col-12 col-lg-3 col-xl-2 h-100">
                 <div class="mb-4">
                     <h6 class="fw-bold text-muted mb-3">가격대</h6>
                     <div class="d-flex flex-wrap gap-2">
@@ -32,7 +33,7 @@
                 </div>
             </div>
 
-            <div class="p-4 col-12 col-lg-9 col-xl-10" style="background-color: #222222;">
+            <div class="p-4 col-12 col-lg-9 col-xl-10 h-100" style="background-color: #222222;">
 
                 <div class="d-flex justify-content-between align-items-center mb-4"
                      th:unless="${#lists.isEmpty(questions.getQuestions())}">
@@ -63,8 +64,9 @@
             </div>
 
         </div>
-        <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
-            <ul class="pagination gap-2 pagination-clean"
+
+        <nav aria-label="Page navigation" class="d-flex justify-content-center align-items-center">
+            <ul class="pagination gap-2 pagination-clean m-0"
                 th:with="
         start=${(pageable.getPageNumber()) < 5 ? 1 : pageable.getPageNumber()-4},
         end=${(start + 8 < questions.getTotalPageCount()) ? start + 8 : questions.getTotalPageCount()}
