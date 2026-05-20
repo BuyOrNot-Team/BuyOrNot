@@ -32,3 +32,7 @@ spring:
 file:
   upload:
     path: ${FILE_UPLOAD_PATH} # 이미지 저장 경로. 각자 경로로 설정해주세요.
+  server:
+    servlet:
+      session:
+        persistent: false #세션 파일 저장 비활성화

@@ -17,20 +17,15 @@
                         <div class="d-flex gap-2 mb-4">
                             <button id="btnQuestions" class="btn btn-primary"
                                     onclick="showSection('questions')">
-                                작성한 글
+                                작성한 질문
                                 <span class="badge bg-white text-dark ms-1" th:text="${questionCount}">0</span>
                             </button>
-                            <!-- TODO: 답변 기능 구현 후 활성화
                             <button id="btnAnswers" class="btn btn-outline-primary"
                                     onclick="showSection('answers')">
                                 작성한 답변
                                 <span class="badge bg-primary text-white ms-1" th:text="${answerCount}">0</span>
                             </button>
-                            -->
-                            <button id="btnAnswers" class="btn btn-outline-primary" disabled>
-                                작성한 답변
-                                <span class="badge bg-secondary text-white ms-1" th:text="${answerCount}">0</span>
-                            </button>
+
                         </div>
 
                         <!-- 작성한 질문 목록 -->
@@ -58,7 +53,6 @@
                             </div>
                         </div>
 
-                        <!-- TODO: 답변 기능 구현 후 활성화
                         <div id="answersSection" style="display: none;">
                             <div th:if="${#lists.isEmpty(myAnswers)}"
                                  class="text-center text-muted py-5">
@@ -81,7 +75,6 @@
                                 </div>
                             </div>
                         </div>
-                        -->
 
                         <div class="mt-4">
                             <a th:href="@{/mypage}" class="btn btn-outline-secondary btn-sm">← 마이페이지로</a>
@@ -96,15 +89,14 @@
                 function showSection(section) {
                     const isQuestions = section === 'questions';
                     document.getElementById('questionsSection').style.display = isQuestions ? 'block' : 'none';
-                    // TODO: 답변 기능 구현 후 활성화
-                    // document.getElementById('answersSection').style.display = isQuestions ? 'none' : 'block';
+                    document.getElementById('answersSection').style.display = isQuestions ? 'none' : 'block';
 
                     document.getElementById('btnQuestions').className = isQuestions
                         ? 'btn btn-primary'
                         : 'btn btn-outline-primary';
-                    // document.getElementById('btnAnswers').className = isQuestions
-                    //     ? 'btn btn-outline-primary'
-                    //     : 'btn btn-primary';
+                    document.getElementById('btnAnswers').className = isQuestions
+                        ? 'btn btn-outline-primary'
+                        : 'btn btn-primary';
                 }
 
                 document.addEventListener('DOMContentLoaded', function () {
