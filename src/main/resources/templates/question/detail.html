@@ -1,98 +1,140 @@
 <!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/base}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/base}">
+
 <head>
     <title th:text="${question.title}">질문 상세</title>
 </head>
+
 <body>
-<main layout:fragment="content" class="container my-4" style="max-width: 800px;">
+    <main layout:fragment="content" class="container my-4" style="max-width: 800px;">
 
-    <!-- 상단 메타 -->
-    <div class="mb-1 d-flex justify-content-between align-items-center">
-        <span class="text-muted small">
-            작성자: <strong th:text="${question.nickname}"></strong>
-            <!-- ConsumerType 뱃지 -->
-            <span th:if="${question.consumerType != null}"
-                  class="badge ms-1"
-                  th:style="'background-color:' + ${question.consumerType.color}"
-                  th:text="${question.consumerType.note}"
-                  th:title="${question.consumerType.description}"></span>
-            &nbsp;·&nbsp;
-            <span th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
-            &nbsp;·&nbsp; 조회 <span th:text="${question.viewCount}"></span>
-        </span>
-        <span th:if="${question.acceptedAnswerId != null}"
-              class="badge bg-success">채택 완료</span>
-    </div>
+        <!-- 상단 메타 -->
+        <div class="mb-1 d-flex justify-content-between align-items-center">
+            <span class="text-muted small">
+                작성자: <strong th:text="${question.nickname}"></strong>
+                <!-- ConsumerType 뱃지 -->
+                <span th:if="${question.consumerType != null}" class="badge ms-1"
+                    th:style="'background-color:' + ${question.consumerType.color}"
+                    th:text="${question.consumerType.note}" th:title="${question.consumerType.description}"></span>
+                &nbsp;·&nbsp;
+                <span th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                &nbsp;·&nbsp; 조회 <span th:text="${question.viewCount}"></span>
+            </span>
+            <span th:if="${question.acceptedAnswerId != null}" class="badge bg-success">채택 완료</span>
+        </div>
 
-    <!-- 제목 -->
-    <h3 class="mb-3" th:text="${question.title}"></h3>
+        <!-- 제목 -->
+        <h3 class="mb-3" th:text="${question.title}"></h3>
 
-    <!-- 상품 정보 카드 -->
-    <div th:if="${question.productName}" class="card mb-3 border-primary">
-        <div class="card-body py-2 d-flex align-items-center gap-3">
-            <!-- 이미지 -->
-            <img th:if="${question.imageUrl}"
-                 th:src="${question.imageUrl}"
-                 alt="상품 이미지"
-                 class="rounded"
-                 style="width:72px; height:72px; object-fit:cover;">
-            <div>
-                <div class="fw-bold" th:text="${question.productName}"></div>
-                <div th:if="${question.price != null}"
-                     class="text-primary"
-                     th:text="${#numbers.formatInteger(question.price, 0, 'COMMA') + '원'}"></div>
+        <!-- 상품 정보 카드 -->
+        <div th:if="${question.productName}" class="card mb-3 border-primary">
+            <div class="card-body py-2 d-flex align-items-center gap-3">
+                <!-- 이미지 -->
+                <img th:if="${question.imageUrl}" th:src="${question.imageUrl}" alt="상품 이미지" class="rounded"
+                    style="width:72px; height:72px; object-fit:cover;">
+                <div>
+                    <div class="fw-bold" th:text="${question.productName}"></div>
+                    <div th:if="${question.price != null}" class="text-primary"
+                        th:text="${#numbers.formatInteger(question.price, 0, 'COMMA') + '원'}"></div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- 본문 -->
-    <div class="border rounded p-3 mb-3 bg-white"
-         th:text="${question.content}"
-         style="white-space: pre-wrap; min-height: 120px;"></div>
+        <!-- 본문 -->
+        <div class="border rounded p-3 mb-3 bg-white" th:text="${question.content}"
+            style="white-space: pre-wrap; min-height: 120px;"></div>
 
-    <!-- 장·단점 -->
-    <div th:if="${question.pros != null or question.cons != null}" class="row g-3 mb-3">
-        <div class="col-md-6" th:if="${question.pros != null}">
-            <div class="card border-success h-100">
-                <div class="card-header bg-success text-white py-1 small fw-bold">👍 장점</div>
-                <div class="card-body py-2"
-                     th:text="${question.pros}"
-                     style="white-space: pre-wrap;"></div>
+        <!-- 장·단점 -->
+        <div th:if="${question.pros != null or question.cons != null}" class="row g-3 mb-3">
+            <div class="col-md-6" th:if="${question.pros != null}">
+                <div class="card border-success h-100">
+                    <div class="card-header bg-success text-white py-1 small fw-bold">👍 장점</div>
+                    <div class="card-body py-2" th:text="${question.pros}" style="white-space: pre-wrap;"></div>
+                </div>
+            </div>
+            <div class="col-md-6" th:if="${question.cons != null}">
+                <div class="card border-danger h-100">
+                    <div class="card-header bg-danger text-white py-1 small fw-bold">👎 단점</div>
+                    <div class="card-body py-2" th:text="${question.cons}" style="white-space: pre-wrap;"></div>
+                </div>
             </div>
         </div>
-        <div class="col-md-6" th:if="${question.cons != null}">
-            <div class="card border-danger h-100">
-                <div class="card-header bg-danger text-white py-1 small fw-bold">👎 단점</div>
-                <div class="card-body py-2"
-                     th:text="${question.cons}"
-                     style="white-space: pre-wrap;"></div>
+
+        <!-- 수정/삭제 -->
+        <div class="d-flex gap-2 mb-5">
+            <a th:href="@{/questions/{id}/edit(id=${question.questionId})}"
+                class="btn btn-sm btn-outline-secondary">수정</a>
+            <form th:action="@{/questions/{id}/delete(id=${question.questionId})}" method="post"
+                onsubmit="return confirm('정말 삭제하시겠습니까?')">
+                <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
+            </form>
+        </div>
+
+        <!-- 답변 영역 -->
+        <hr>
+        <h5 class="mb-3">답변 <span class="text-muted small" th:text="'(' + ${#lists.size(answers)} + ')'"></span></h5>
+
+        <!-- 답변 목록 -->
+        <div th:if="${#lists.isEmpty(answers)}" class="text-muted mb-3">
+            아직 등록된 답변이 없습니다.
+        </div>
+        <div th:each="answer : ${answers}" class="card mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-bold small" th:text="${answer.nickname}"></span>
+                    <span class="text-muted small">
+                        <span th:text="${#temporals.format(answer.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                        <span th:if="${answer.updatedAt != null}" class="text-secondary"> (수정됨)</span>
+                    </span>
+                </div>
+                <span th:if="${answer.recommendation.name() == 'BUY'}" class="badge bg-success mb-2">✅ 살까</span>
+                <span th:if="${answer.recommendation.name() == 'DONT_BUY'}" class="badge bg-danger mb-2">❌ 말까</span>
+                <p th:text="${answer.content}" style="white-space: pre-wrap;" class="mb-2"></p>
+                <!-- 작성자 본인만 수정/삭제 버튼 표시 -->
+                <div th:if="${#authentication.principal != null and #authentication.principal.member.memberId == answer.memberId}"
+                    class="d-flex gap-2">
+                    <a th:href="@{/answers/{id}/edit(id=${answer.answerId})}"
+                        class="btn btn-sm btn-outline-secondary">수정</a>
+                    <form th:action="@{/answers/{id}/delete(id=${answer.answerId})}" method="post"
+                        onsubmit="return confirm('정말 삭제하시겠습니까?')">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- 수정/삭제 - 작성자 본인에게만 노출 -->
-    <div th:if="${currentMemberId != null and question.memberId == currentMemberId}"
-         class="d-flex gap-2 mb-5">
-        <a th:href="@{/questions/{id}/edit(id=${question.questionId})}"
-           class="btn btn-sm btn-outline-secondary">수정</a>
-        <form th:action="@{/questions/{id}/delete(id=${question.questionId})}" method="post"
-              onsubmit="return confirm('정말 삭제하시겠습니까?')">
-            <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
-        </form>
-    </div>
-
-    <!-- 답변 영역 (AnswerController 연동 후 채울 자리) -->
-    <hr>
-    <h5 class="mb-3">답변</h5>
-    <p class="text-muted">답변 기능 구현 부분</p>
-
-    <div class="mt-3">
-        <a th:href="@{/questions}" class="btn btn-secondary btn-sm">목록으로</a>
-    </div>
-
-</main>
+        <!-- 답변 작성 폼 (로그인 시에만 표시) -->
+        <div th:if="${#authentication.principal != null}" class="mt-4">
+            <h6 class="fw-bold mb-2">답변 작성</h6>
+            <form th:action="@{/answers/new/{id}(id=${question.questionId})}" th:object="${answerFormDTO}"
+                method="post">
+                <!-- 살까/말까 선택 -->
+                <div class="mb-3 d-flex gap-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" th:field="*{recommendation}" value="BUY" id="buy">
+                        <label class="form-check-label text-success fw-bold" for="buy">✅ 살까</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" th:field="*{recommendation}" value="DONT_BUY"
+                            id="dontBuy">
+                        <label class="form-check-label text-danger fw-bold" for="dontBuy">❌ 말까</label>
+                    </div>
+                    <div th:if="${#fields.hasErrors('recommendation')}" th:errors="*{recommendation}"
+                        class="text-danger small mt-1"></div>
+                </div>
+                <div class="mb-2">
+                    <textarea th:field="*{content}" class="form-control" rows="4" placeholder="답변을 입력하세요."></textarea>
+                    <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-danger small mt-1">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">답변 등록</button>
+            </form>
+        </div>
+        <div th:if="${#authentication.principal == null}" class="mt-4 text-muted small">
+            답변을 작성하려면 <a th:href="@{/login}">로그인</a>이 필요합니다.
+        </div>
+    </main>
 </body>
+
 </html>

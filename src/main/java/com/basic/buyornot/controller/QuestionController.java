@@ -1,9 +1,11 @@
 package com.basic.buyornot.controller;
 
+import com.basic.buyornot.dto.AnswerFormDTO;
 import com.basic.buyornot.config.PrincipalDetails;
 import com.basic.buyornot.dto.QuestionDetailDTO;
 import com.basic.buyornot.dto.QuestionFormDTO;
 import com.basic.buyornot.dto.QuestionSearchDTO;
+import com.basic.buyornot.service.AnswerService;
 import com.basic.buyornot.service.QuestionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ import java.io.IOException;
 public class QuestionController {
 
     private final QuestionService questionService;
+    private final AnswerService answerService;
 
 
     // 상세
@@ -33,6 +36,8 @@ public class QuestionController {
                          @AuthenticationPrincipal PrincipalDetails principal) {
         QuestionDetailDTO question = questionService.getQuestion(id);
         model.addAttribute("question", question);
+        model.addAttribute("answers", answerService.getAnswers(id));
+        model.addAttribute("answerFormDTO", new AnswerFormDTO());
 
         // 로그인 상태면 현재 사용자 ID를 넘겨서 작성자 여부 판단에 사용
         if (principal != null) {

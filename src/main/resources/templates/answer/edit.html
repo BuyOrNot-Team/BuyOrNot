@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/base}">
 
+<head>
+    <title>답변 수정</title>
+</head>
+
+<body>
+    <main layout:fragment="content" class="container my-4" style="max-width: 800px;">
+
+        <h4 class="mb-4">답변 수정</h4>
+
+        <form th:action="@{/answers/{id}/edit(id=${answer.answerId})}" th:object="${answerFormDTO}" method="post">
+
+            <!-- 살까/말까 선택 -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">살까 / 말까</label>
+                <div class="d-flex gap-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" th:field="*{recommendation}" value="BUY" id="buy">
+                        <label class="form-check-label text-success fw-bold" for="buy">✅ 살까</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" th:field="*{recommendation}" value="DONT_BUY"
+                            id="dontBuy">
+                        <label class="form-check-label text-danger fw-bold" for="dontBuy">❌ 말까</label>
+                    </div>
+                </div>
+                <div th:if="${#fields.hasErrors('recommendation')}" th:errors="*{recommendation}"
+                    class="text-danger small mt-1"></div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">내용</label>
+                <textarea th:field="*{content}" class="form-control" rows="6" placeholder="답변 내용을 입력하세요."></textarea>
+                <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-danger small mt-1">
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">수정 완료</button>
+                <a th:href="@{/questions/{id}(id=${answer.questionId})}" class="btn btn-secondary">취소</a>
+            </div>
+
+        </form>
+
+    </main>
 </body>
+
 </html>
