@@ -9,21 +9,20 @@ import java.time.LocalDateTime;
 @Getter
 public class SimpleQuestionDTO {
     private Long questionId;
-    private String productCategory;
     private String title;
     private String price;
-    private Integer buyCount;
-    private Integer notBuyCount;
-    private Integer answerCount;
+    private Long answerCount;
+    private Long buyCount;
+    private Long notBuyCount;
     private LocalDateTime createAt;
 
     public String getBuyRatioPercentage() {
-        return String.format("%.1f", getBuyCount()*100.0 / getVoteCount());
+        return getVoteCount() != 0 ? String.format("%.1f", getBuyCount()*100.0 / getVoteCount()) : "0";
     }
 
-    public String getNotBuyRatioPercentage() {return String.format("%.1f", getNotBuyCount()*100.0 / getVoteCount());}
+    public String getNotBuyRatioPercentage() {return getVoteCount() != 0 ? String.format("%.1f", getNotBuyCount()*100.0 / getVoteCount()) : "0";}
 
-    public Integer getVoteCount() {
+    public Long getVoteCount() {
         return getBuyCount() + getNotBuyCount();
     }
 
@@ -31,9 +30,8 @@ public class SimpleQuestionDTO {
         return StringFormatter.formatTimeAgo(createAt);
     }
 
-    public SimpleQuestionDTO(Long questionId, String productCategory, String title, Integer price, Integer buyCount, Integer notBuyCount, Integer answerCount, LocalDateTime createAt) {
+    public SimpleQuestionDTO(Long questionId, String title, Integer price, Long answerCount, Long buyCount, Long notBuyCount, LocalDateTime createAt) {
         this.questionId = questionId;
-        this.productCategory = productCategory;
         this.title = title;
         this.price = StringFormatter.formatPrice(price);
         this.buyCount = buyCount;

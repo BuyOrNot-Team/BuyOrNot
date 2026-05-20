@@ -121,19 +121,8 @@ public class QuestionService {
     }
 
     public QuestionSearchDTO searchQuestions(String searchText, Pageable pageable) {
-        Page<Question> questionsPage = questionRepository.findByTitleContaining(searchText, pageable);
-        List<SimpleQuestionDTO> questions = questionsPage.stream()
-                .map(item -> new SimpleQuestionDTO(
-                        item.getQuestionId(),
-                        "",
-                        item.getTitle(),
-                        item.getPrice(),
-                        50,
-                        50,
-                        100,
-                        item.getCreatedAt()
-                        )
-                ).toList();
+        Page<SimpleQuestionDTO> questionsPage = questionRepository.findByTitleContainingWithVoteCounts(searchText, pageable);
+        List<SimpleQuestionDTO> questions = questionsPage.stream().toList();
 
         return new QuestionSearchDTO(questionsPage.getTotalElements(), questionsPage.getTotalPages(), pageable, questions);
     }
