@@ -1,5 +1,6 @@
 package com.basic.buyornot.repository;
 
+import com.basic.buyornot.dto.SimpleQuestionDTO;
 import com.basic.buyornot.entity.Member;
 import com.basic.buyornot.entity.Question;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,26 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query("UPDATE Question q SET q.viewCount = q.viewCount + 1 WHERE q.questionId = :id")
     void incrementViewCount(@Param("id") Long id);
 
-    Page<Question> findByTitleContaining(String searchText, Pageable pageable);
+    @Query(
+            value = "SELECT new com.basic.buyornot.dto.SimpleQuestionDTO(" +
+                    "  q.id, " +
+                    "  q.title, " +
+                    "  q.price, " +
+                    "  COUNT(a.id), " +
+                    "  COUNT(CASE WHEN a.recommendation = 'BUY' THEN 1 END), " +    // <-- 💡 패키지 경로 대신 단순 문자열 비교
+                    "  COUNT(CASE WHEN a.recommendation = 'NOT_BUY' THEN 1 END), " +
+                    "  q.createdAt" +
+                    ") " +
+                    "FROM Question q " +
+                    "LEFT JOIN Answer a ON a.question = q " +
+                    "WHERE q.title LIKE CONCAT('%', :title, '%') " +
+                    "GROUP BY q.id, q.title, q.price, q.createdAt",
+            countQuery = "SELECT COUNT(q) FROM Question q WHERE q.title LIKE CONCAT('%', :title, '%')"
+    )
+    Page<SimpleQuestionDTO> findByTitleContainingWithVoteCounts(
+            @Param("title") String title,
+            Pageable pageable
+    );
 
     List<Question> findByMemberOrderByCreatedAtDesc(Member member);
 }
