@@ -21,7 +21,7 @@
                 <span th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
                 &nbsp;·&nbsp; 조회 <span th:text="${question.viewCount}"></span>
             </span>
-            <span th:if="${question.acceptedAnswerId != null}" class="badge bg-success">채택 완료</span>
+            <span th:if="${question.acceptedAnswerId != null}" class="badge bg-success" style="background-color: black !important;">채택 완료</span>
         </div>
 
         <!-- 제목 -->
@@ -48,14 +48,14 @@
         <!-- 장·단점 -->
         <div th:if="${question.pros != null or question.cons != null}" class="row g-3 mb-3">
             <div class="col-md-6" th:if="${question.pros != null}">
-                <div class="card border-success h-100">
-                    <div class="card-header bg-success text-white py-1 small fw-bold">👍 장점</div>
+                <div class="card border-success h-100" style="border-color: var(--buy-green) !important;">
+                    <div class="card-header bg-success text-white py-1 small fw-bold" style="background-color: var(--buy-green) !important;">👍 장점</div>
                     <div class="card-body py-2" th:text="${question.pros}" style="white-space: pre-wrap;"></div>
                 </div>
             </div>
             <div class="col-md-6" th:if="${question.cons != null}">
-                <div class="card border-danger h-100">
-                    <div class="card-header bg-danger text-white py-1 small fw-bold">👎 단점</div>
+                <div class="card border-danger h-100" style="border-color: var(--mal-red) !important;">
+                    <div class="card-header bg-danger text-white py-1 small fw-bold" style="background-color: var(--mal-red) !important;">👎 단점</div>
                     <div class="card-body py-2" th:text="${question.cons}" style="white-space: pre-wrap;"></div>
                 </div>
             </div>
@@ -81,22 +81,22 @@
             아직 등록된 답변이 없습니다.
         </div>
         <div th:each="answer : ${answers}" class="card mb-3"
-             th:classappend="${answer.answerId == question.acceptedAnswerId} ? 'border-success border-2'">
+             th:classappend="${answer.answerId == question.acceptedAnswerId} ? 'border-accepted border-2'">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <span class="fw-bold small" th:text="${answer.nickname}"></span>
                     <div class="d-flex align-items-center gap-2">
                         <!-- 채택 뱃지 -->
                         <span th:if="${answer.answerId == question.acceptedAnswerId}"
-                              class="badge bg-success">✔ 채택된 답변</span>
+                              class="badge bg-success" style="background-color: black !important;">✔ 채택된 답변</span>
                         <span class="text-muted small">
                             <span th:text="${#temporals.format(answer.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
                             <span th:if="${answer.updatedAt != null}" class="text-secondary"> (수정됨)</span>
                         </span>
                     </div>
                 </div>
-                <span th:if="${answer.recommendation.name() == 'BUY'}" class="badge bg-success mb-2">✅ 살까</span>
-                <span th:if="${answer.recommendation.name() == 'DONT_BUY'}" class="badge bg-danger mb-2">❌ 말까</span>
+                <span th:if="${answer.recommendation.name() == 'BUY'}" class="badge bg-success mb-2" style="background-color: var(--buy-green) !important;">✅ 살까</span>
+                <span th:if="${answer.recommendation.name() == 'DONT_BUY'}" class="badge bg-danger mb-2" style="background-color: var(--mal-red) !important;">❌ 말까</span>
                 <p th:text="${answer.content}" style="white-space: pre-wrap;" class="mb-2"></p>
                 <div class="d-flex gap-2">
                     <!-- 질문 작성자에게만 채택 버튼 노출 -->
@@ -105,11 +105,11 @@
                           method="post">
                         <button type="submit"
                                 th:text="${answer.answerId == question.acceptedAnswerId} ? '채택 취소' : '채택'"
-                                th:class="${answer.answerId == question.acceptedAnswerId} ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-success'">
+                                th:class="${answer.answerId == question.acceptedAnswerId} ? 'btn btn-sm btn-accepted' : 'btn btn-sm btn-outline-success'">
                         </button>
                     </form>
                     <!-- 답변 작성자 본인만 수정/삭제 버튼 표시 -->
-                    <div th:if="${#authentication.principal != null and #authentication.principal.member.memberId == answer.memberId}"
+                    <div th:if="${#authorization.expression('isAuthenticated()') and #authentication.principal.member.memberId == answer.memberId}"
                         class="d-flex gap-2">
                         <a th:href="@{/answers/{id}/edit(id=${answer.answerId})}"
                             class="btn btn-sm btn-outline-secondary">수정</a>
@@ -131,12 +131,12 @@
                 <div class="mb-3 d-flex gap-2">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" th:field="*{recommendation}" value="BUY" id="buy">
-                        <label class="form-check-label text-success fw-bold" for="buy">✅ 살까</label>
+                        <label class="form-check-label text-success fw-bold" for="buy" style="color: var(--buy-green) !important;">✅ 살까</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" th:field="*{recommendation}" value="DONT_BUY"
                             id="dontBuy">
-                        <label class="form-check-label text-danger fw-bold" for="dontBuy">❌ 말까</label>
+                        <label class="form-check-label text-danger fw-bold" for="dontBuy" style="color: var(--mal-red) !important;">❌ 말까</label>
                     </div>
                     <div th:if="${#fields.hasErrors('recommendation')}" th:errors="*{recommendation}"
                         class="text-danger small mt-1"></div>

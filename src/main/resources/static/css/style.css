@@ -91,6 +91,7 @@ nav {
     .navbar-collapse {
         max-height: none !important;
         overflow-y: visible !important;
+        background-color: #ffffff !important;
     }
 
     .navbar-collapse .d-flex {
@@ -112,7 +113,7 @@ nav {
 
 .text-danger.dropdown-item:active,
 .text-danger.dropdown-item.active {
-    background-color: rgb(220, 53, 69) !important;
+    background-color: var(--mal-red) !important;
     color: white !important;
 }
 
@@ -271,4 +272,26 @@ footer {
   font-weight: bold;
   color: var(--buy-green);
   background-color: var(--buy-light-green);
+}
+
+.full-dashboard {
+    min-height: auto;
+}
+@media (min-width: 992px) {
+    .full-dashboard { min-height: calc(100vh - 78px); }
+}
+
+/* 답변 채택 관련 설정 */
+.badge-accepted {
+    background-color: black !important;
+    color: white;
+}
+
+.border-accepted {
+    border-color: black !important;
+}
+.btn-accepted {
+    background-color: black !important;
+    color: white;
+    border-color: black !important;
 }
