@@ -31,7 +31,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
                     "  q.price, " +
                     "  COUNT(a.id), " +
                     "  COUNT(CASE WHEN a.recommendation = 'BUY' THEN 1 END), " +    // <-- 💡 패키지 경로 대신 단순 문자열 비교
-                    "  COUNT(CASE WHEN a.recommendation = 'NOT_BUY' THEN 1 END), " +
+                    "  COUNT(CASE WHEN a.recommendation = 'DONT_BUY' THEN 1 END), " +
                     "  q.createdAt" +
                     ") " +
                     "FROM Question q " +
