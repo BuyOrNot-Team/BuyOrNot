@@ -10,16 +10,16 @@
         <div class="vote-progress progress d-flex mb-2" style="height: 8px; background-color: #EDEDED; overflow: hidden; border-radius: 4px;">
 
             <div class="progress-bar"
-                 th:style="|width: ${question.getBuyRatio()}%; background-color: var(--buy-green); transition: width 0.5s ease;|"></div>
+                 th:style="|width: ${question.getBuyRatioPercentage()}%; background-color: var(--buy-green); transition: width 0.5s ease;|"></div>
 
             <div class="progress-bar"
-                 th:style="|width: ${question.getNotBuyRatio()}%; background-color: var(--mal-red); transition: width 0.5s ease;|"></div>
+                 th:style="|width: ${question.getNotBuyRatioPercentage()}%; background-color: var(--mal-red); transition: width 0.5s ease;|"></div>
 
         </div>
 
         <div class="d-flex justify-content-between font-weight-bold small">
-            <span class="text-success fw-bold" th:text="|살래 ${question.getBuyRatio()}%|">살래 0%</span>
-            <span class="text-danger fw-bold" th:text="|말래 ${question.getNotBuyRatio()}%|">말래 0%</span>
+            <span class="text-success fw-bold" th:text="|살래 ${question.getBuyRatioPercentage()}%|">살래 0%</span>
+            <span class="text-danger fw-bold" th:text="|말래 ${question.getNotBuyRatioPercentage()}%|">말래 0%</span>
         </div>
 
         <hr class="my-2" style="border-color: #EDEDED;">
