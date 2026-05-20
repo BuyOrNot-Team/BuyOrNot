@@ -99,4 +99,14 @@ public class Question {
         this.cons = cons;
         this.imageUrl = imageUrl;
     }
+
+    // 답변 채택
+    public void acceptAnswer(Long answerId) {
+        this.acceptedAnswerId = answerId;
+    }
+
+    // 채택 취소
+    public void cancelAccept() {
+        this.acceptedAnswerId = null;
+    }
 }

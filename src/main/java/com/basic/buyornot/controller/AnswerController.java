@@ -61,6 +61,15 @@ public class AnswerController {
         return "redirect:/questions/" + answer.getQuestionId();
     }
 
+    // 답변 채택 (채택/취소 토글)
+    @PostMapping("/{answerId}/accept/{questionId}")
+    public String accept(@PathVariable Long answerId,
+                         @PathVariable Long questionId,
+                         @AuthenticationPrincipal PrincipalDetails principal) {
+        answerService.accept(questionId, answerId, principal.getMember().getMemberId());
+        return "redirect:/questions/" + questionId;
+    }
+
     // 삭제 (소프트 딜리트)
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id,
