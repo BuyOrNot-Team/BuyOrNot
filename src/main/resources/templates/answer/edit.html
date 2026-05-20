@@ -19,12 +19,12 @@
                 <div class="d-flex gap-3">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" th:field="*{recommendation}" value="BUY" id="buy">
-                        <label class="form-check-label text-success fw-bold" for="buy">✅ 살까</label>
+                        <label class="form-check-label text-success fw-bold" for="buy" style="color: var(--buy-green) !important;">✅ 살까</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" th:field="*{recommendation}" value="DONT_BUY"
                             id="dontBuy">
-                        <label class="form-check-label text-danger fw-bold" for="dontBuy">❌ 말까</label>
+                        <label class="form-check-label text-danger fw-bold" for="dontBuy" style="color: var(--mal-red) !important;">❌ 말까</label>
                     </div>
                 </div>
                 <div th:if="${#fields.hasErrors('recommendation')}" th:errors="*{recommendation}"
