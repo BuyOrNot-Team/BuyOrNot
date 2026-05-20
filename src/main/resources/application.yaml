@@ -29,6 +29,10 @@ spring:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
             scope: profile, email
+  servlet:
+    multipart:
+      max-file-size: 10MB   # 단일 파일 최대 크기 설정
+      max-request-size: 10MB  # 한 요청에 포함된 전체 파일의 최대 크기 설정
 file:
   upload:
     path: ${FILE_UPLOAD_PATH} # 이미지 저장 경로. 각자 경로로 설정해주세요.
