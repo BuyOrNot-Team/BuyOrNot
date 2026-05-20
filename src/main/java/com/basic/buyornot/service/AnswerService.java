@@ -77,4 +77,9 @@ public class AnswerService {
         answer.softDelete();
         return questionId;
     }
+
+    // 사용자의 답변 조회
+    public List<Answer> getMyAnswers(Member member) {
+        return answerRepository.findByMemberOrderByCreatedAtDesc(member);
+    }
 }

@@ -9,9 +9,65 @@
     </head>
     <body>
         <div layout:fragment="content">
-            <!-- 실제 페이지 content 부분 -->
-            <h1>index 페이지</h1>
+
+        <div class="container-fluid px-5 py-4">
+            <div class="row g-4">
+
+                <div class="col-xl-6" th:unless="${#lists.isEmpty(topQuestions)}">
+                    <div class="rounded-4 p-4 h-100" style="background-color: var(--mal-light-red);">
+                        <h4 class="fw-bold mb-3" style="color: var(--mal-red);">
+                            🔥 인기 질문
+                        </h4>
+                        <div class="row g-3" th:classappend="${#lists.size(topQuestions) == 1} ? 'justify-content-center' : ''">
+                            <div class="col-md-6" th:each="question : ${topQuestions}">
+                                <a th:href="@{/questions/{questionId}(questionId=${question.getQuestionId()})}" class="text-decoration-none d-block h-100">
+                                    <div class="card-top-hot h-100" th:insert="~{main/question-card :: qCard(question=${question})}"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6" th:unless="${#lists.isEmpty(latestQuestions)}">
+                    <div class="rounded-4 p-4 h-100" style="background-color: var(--buy-light-green);">
+                        <h4 class="fw-bold mb-3" style="color: var(--buy-green);">
+                            ✨ 최신 질문
+                        </h4>
+                        <div class="row g-3" th:classappend="${#lists.size(latestQuestions) == 1} ? 'justify-content-center' : ''">
+                            <div class="col-md-6" th:each="question : ${latestQuestions}">
+                                <a th:href="@{/questions/{questionId}(questionId=${question.getQuestionId()})}" class="text-decoration-none d-block h-100">
+                                    <div class="card-top-new h-100" th:insert="~{main/question-card :: qCard(question=${question})}"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
+
+        <div class="container-fluid px-5 py-4">
+            <div class="row g-0">
+
+                <div class="p-4 col-12 rounded-4" style="background-color: #222222;">
+
+                    <div th:if="${#lists.isEmpty(questions.getQuestions())}" class="text-white-50 py-5 text-center fs-5">
+                        등록된 질문이 없습니다. 첫 질문을 작성해 보세요!
+                    </div>
+
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4" th:unless="${#lists.isEmpty(questions.getQuestions())}">
+                        <div class="col" th:each="question: ${questions.getQuestions()}">
+                            <a th:href="@{/questions/{questionId}(questionId=${question.getQuestionId()})}" class="text-decoration-none d-block h-100">
+                                <div th:replace="~{main/question-card :: qCard(question=${question})}"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 
         <th:block layout:fragment="script">
             <!-- common.js 이외의 js 파일 import가 필요한 경우 아래와 같이 사용 -->

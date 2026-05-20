@@ -2,8 +2,14 @@ package com.basic.buyornot.controller;
 
 import com.basic.buyornot.dto.MemberDeleteDTO;
 import com.basic.buyornot.dto.MemberEditDTO;
+import com.basic.buyornot.entity.Answer;
 import com.basic.buyornot.entity.Member;
+import com.basic.buyornot.entity.Question;
 import com.basic.buyornot.service.MemberService;
+import com.basic.buyornot.service.QuestionService;
+import com.basic.buyornot.service.AnswerService;
+
+import java.util.List;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -20,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 public class MyPageController {
 
     private final MemberService memberService;
+    private final QuestionService questionService;
+    private final AnswerService answerService;
 
     @GetMapping("/mypage")
     public String myPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -34,6 +42,19 @@ public class MyPageController {
                                      @AuthenticationPrincipal UserDetails userDetails) {
         memberService.updateConsumerType(userDetails.getUsername(), consumerType);
         return "redirect:/mypage";
+    }
+
+    @GetMapping("/mypage/activity")
+    public String activityPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        Member member = memberService.findByUsername(userDetails.getUsername());
+        List<Question> myQuestions = questionService.getMyQuestions(member);
+        model.addAttribute("myQuestions", myQuestions);
+        model.addAttribute("questionCount", myQuestions.size());
+        // 답변 구현 후 활성화
+        List<Answer> myAnswers = answerService.getMyAnswers(member);
+        model.addAttribute("myAnswers", myAnswers);
+        model.addAttribute("answerCount", myAnswers.size());
+        return "member/activity";
     }
 
     // 내 정보 수정

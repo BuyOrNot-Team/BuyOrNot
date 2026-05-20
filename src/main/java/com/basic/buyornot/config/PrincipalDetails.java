@@ -38,6 +38,10 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         return member.getUsername();
     }
 
+    public Long getMemberId() {
+        return member.getMemberId();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(member.getRole().name()));
