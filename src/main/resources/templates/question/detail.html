@@ -11,15 +11,17 @@
 
         <!-- 상단 메타 -->
         <div class="mb-1 d-flex justify-content-between align-items-center">
-            <span class="text-muted small">
-                작성자: <strong th:text="${question.nickname}"></strong>
-                <!-- ConsumerType 뱃지 -->
+            <span class="text-muted small d-inline-flex align-items-center flex-wrap">
+                작성자:&nbsp;<strong th:text="${question.nickname}" class="text-dark"></strong>
+
                 <span th:if="${question.consumerType != null}" class="badge ms-1"
-                    th:style="'background-color:' + ${question.consumerType.color}"
-                    th:text="${question.consumerType.note}" th:title="${question.consumerType.description}"></span>
-                &nbsp;·&nbsp;
+                      th:style="'background-color:' + ${question.consumerType.color}"
+                      th:text="${question.consumerType.note}" th:title="${question.consumerType.description}"></span>
+
+                <span class="mx-2">·</span>
                 <span th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
-                &nbsp;·&nbsp; 조회 <span th:text="${question.viewCount}"></span>
+                <span class="mx-2">·</span>
+                <span>조회 <span th:text="${question.viewCount}"></span></span>
             </span>
             <span th:if="${question.acceptedAnswerId != null}" class="badge bg-success" style="background-color: black !important;">채택 완료</span>
         </div>
@@ -84,7 +86,13 @@
              th:classappend="${answer.answerId == question.acceptedAnswerId} ? 'border-accepted border-2'">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="fw-bold small" th:text="${answer.nickname}"></span>
+                    <span class="fw-bold small d-inline-flex align-items-center">
+                        <span th:text="${answer.nickname}"></span>
+
+                        <span th:if="${answer.consumerType != null}" class="badge ms-1"
+                              th:style="'background-color:' + ${answer.consumerType.color}"
+                              th:text="${answer.consumerType.note}" th:title="${answer.consumerType.description}"></span>
+                    </span>
                     <div class="d-flex align-items-center gap-2">
                         <!-- 채택 뱃지 -->
                         <span th:if="${answer.answerId == question.acceptedAnswerId}"
