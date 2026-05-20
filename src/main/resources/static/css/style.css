@@ -266,5 +266,5 @@ footer {
 .pagination-clean .page-item.active .page-link {
   font-weight: bold;
   color: var(--buy-green);
-  background-color: (--buy-light-green);
+  background-color: var(--buy-light-green);
 }
