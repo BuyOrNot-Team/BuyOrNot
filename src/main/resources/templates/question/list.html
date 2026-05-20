@@ -64,7 +64,7 @@
 
         </div>
         <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
-            <ul class="pagination"
+            <ul class="pagination gap-2 pagination-clean"
                 th:with="
         start=${(pageable.getPageNumber()) < 5 ? 1 : pageable.getPageNumber()-4},
         end=${(start + 8 < questions.getTotalPageCount()) ? start + 8 : questions.getTotalPageCount()}
@@ -73,7 +73,7 @@
                     <li class="page-item"
                         th:each="page : ${#numbers.sequence(start, end)}"
                         th:classappend="${page - 1 == pageable.getPageNumber()} ? 'active'">
-                        <a class="page-link"
+                        <a class="page-link rounded-circle"
                            th:href="@{/questions(sort=|${sortType},desc|, page=${page-1}, q=${searchText})}"
                            th:text="${page}">1</a>
                     </li>

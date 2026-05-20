@@ -250,3 +250,21 @@ footer {
     color: var(--brand-black);
     border-right: 1px solid var(--brand-border);
 }
+
+.pagination-clean .page-link {
+  border: none;
+  background: none;
+  color: #6c757d;
+  border-radius: 8px;
+}
+
+.pagination-clean .page-link:hover {
+  background-color: #f8f9fa ;
+  color: #212529;
+}
+
+.pagination-clean .page-item.active .page-link {
+  font-weight: bold;
+  color: var(--buy-green);
+  background-color: (--buy-light-green);
+}
