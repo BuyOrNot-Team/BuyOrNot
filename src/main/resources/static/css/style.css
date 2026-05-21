@@ -301,3 +301,16 @@ footer {
     color: white;
     border-color: black !important;
 }
+
+/* 마이페이지 버튼 스타일 추가 */
+.btn-outline-green {
+    background-color: white;
+    color: var(--buy-green);
+    border-color: var(--buy-green);
+}
+
+.btn-outline-green:hover {
+    background-color: var(--buy-green);
+    color: white;
+    border-color: var(--buy-green);
+}
