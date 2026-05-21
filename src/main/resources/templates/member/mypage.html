@@ -85,6 +85,7 @@
                         <!-- TODO: 내가 작성한 질문/답변 목록 (질문·답변 기능 구현 후 추가) -->
 
                         <div class="mt-3 d-flex gap-2">
+                            <a th:href="@{/mypage/activity}" class="btn btn-outline-green btn-sm">나의 활동</a>
                             <a th:href="@{/mypage/edit}" class="btn btn-outline-primary btn-sm">내 정보 수정</a>
                             <a th:href="@{/member/delete}" class="btn btn-outline-danger btn-sm">회원탈퇴</a>
                             <form th:action="@{/logout}" method="post" class="m-0">
